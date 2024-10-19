@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+sqlalchemy
+pydantic
+asyncpg  # For PostgreSQL async support
+redis
+pytest
+alembic
+python-dotenv
+psycopg2-binary

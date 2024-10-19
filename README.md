@@ -1,15 +1,13 @@
 # Conqueria Caps - Backend _(IN PROGRESS)_
 
-### About the Game
+## About the Game
 **Conqueria Caps** is a real-time, strategy-based board game where 2-6 players battle for dominance over territories on a dynamic world map. Each player begins with an equal amount of resources, and they must make strategic decisions to generate income, fortify their defenses, or launch calculated attacks on their opponents. The game spans multiple continents, with cities, outposts, and military units playing pivotal roles in achieving victory. Players can capture territories, deploy defensive structures, launch attack waves, and strategically manage resources to win by capturing enemy capitals or controlling the most land.
 
 Conqueria Caps also features premium in-game options, including exclusive emotes, customizable cosmetics, and premium troops/buildings, ensuring no pay-to-win mechanics.
 
 This repository contains the **backend** source code for **Conqueria Caps**, developed using **FastAPI**, with real-time WebSocket functionality, PostgreSQL for the database, and Redis for caching and real-time updates.
 
----
-
-## Features
+### Target Features
 
 - **User Authentication**: Secure user login using JWT and OAuth (Google, Facebook, Steam).
 - **Game State Management**: Handle turn-based strategy mechanics with real-time updates.
@@ -22,96 +20,125 @@ This repository contains the **backend** source code for **Conqueria Caps**, dev
 
 ---
 
-## Installation
+## FastAPI Project Documentation
 
-### Prerequisites
-
-- **Python 3.8+**
-- **PostgreSQL** (version 12+)
-- **Redis**
-- **Docker** (for containerization, optional but recommended)
-- **Git**
-
-### Steps to Install
-
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/yourusername/conqueria-caps-backend.git
-   cd conqueria-caps-backend
-   ```
-
-2. **Create and activate a virtual environment**:
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate
-   ```
-
-3. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Set up environment variables**:
-   Create a `.env` file in the root directory of the project with the following variables:
-
-   ```bash
-   DATABASE_URL=postgresql://<username>:<password>@<hostname>:<port>/<database_name>
-   REDIS_URL=redis://<hostname>:<port>
-   SECRET_KEY=<your_secret_key>
-   JWT_ALGORITHM=HS256
-   OAUTH_GOOGLE_CLIENT_ID=<your_google_client_id>
-   OAUTH_GOOGLE_CLIENT_SECRET=<your_google_client_secret>
-   OAUTH_FACEBOOK_CLIENT_ID=<your_facebook_client_id>
-   OAUTH_FACEBOOK_CLIENT_SECRET=<your_facebook_client_secret>
-   OAUTH_STEAM_API_KEY=<your_steam_api_key>
-   STRIPE_SECRET_KEY=<your_stripe_secret_key>
-   CHARGEBEE_SITE=<your_chargebee_site>
-   CHARGEBEE_API_KEY=<your_chargebee_api_key>
-   ```
-
-5. **Set up the database**:
-   Ensure that PostgreSQL is running and create the necessary database:
-
-   ```sql
-   CREATE DATABASE conqueria_caps;
-   ```
-
-   Then apply migrations to set up the database schema:
-
-   ```bash
-   alembic upgrade head
-   ```
-
-6. **Run the development server**:
-   Start the FastAPI backend server:
-
-   ```bash
-   uvicorn app.main:app --reload
-   ```
-
-   The server will be accessible at `http://127.0.0.1:8000/`.
+This project is a **FastAPI**-based backend for the strategy board game, with PostgreSQL as the database, Redis as the caching system, and pgAdmin4 for database management. The app is designed with scalability and multi-environment support, utilizing Docker Compose for orchestration, PostgreSQL for data storage, and Redis for caching. The application supports development, testing, and production environments, each with specific configuration files.
 
 ---
 
-## Docker Setup (Optional)
-
-You can run the entire backend using Docker for easier deployment and environment setup.
-
-1. **Build the Docker image**:
-   ```bash
-   docker build -t conqueria-caps-backend .
-   ```
-
-2. **Run the Docker container**:
-   ```bash
-   docker run -d --name conqueria_backend -p 8000:8000 conqueria-caps-backend
-   ```
-
-This will start the backend on `http://localhost:8000`.
+### Technology Stack
+- **Backend Framework**: FastAPI (Python 3.11)
+- **Database**: PostgreSQL
+- **Cache**: Redis
+- **Database Management**: pgAdmin4
+- **Containerization**: Docker and Docker Compose
+- **Environment Configuration**: `.env` files for DEV, TEST, and PROD environments
 
 ---
 
-## Included Apps
+### Environment Configuration
+
+The application uses environment-specific configuration files to manage credentials and settings for development, testing, and production environments.
+
+**Environment Files:**
+- **`.env.dev`**: Stores environment variables for development.
+- **`.env.test`**: Stores environment variables for testing.
+- **`.env.prod`**: Stores environment variables for production.
+  
+**Example `.env` files are included in GitHub**:
+- `.env.dev.example`
+- `.env.test.example`
+- `.env.prod.example`
+
+These files provide the correct structure with placeholder values for each environment. It is imperative to create these files from their respective example files before proceeding with the app installation.
+
+---
+
+## API Documentation
+
+The backend uses **FastAPI's automatic interactive documentation**.
+
+- Visit the **Swagger UI** at: `http://127.0.0.1:8000`
+- Visit the **Redoc documentation** at: `http://127.0.0.1:8000/redoc`
+
+These pages provide detailed information about all available endpoints, their request parameters, and response formats.
+
+---
+
+### Docker Setup
+
+The project uses Docker Compose to orchestrate services (FastAPI app, PostgreSQL, Redis, pgAdmin).
+
+#### Docker Services:
+- **web**: FastAPI application container.
+- **db**: PostgreSQL database container.
+- **redis**: Redis caching container.
+- **pgadmin**: pgAdmin4 container for managing PostgreSQL databases.
+
+### Running the Application (DEV Environment)
+
+After first creating `.env.dev`, to start the application with Docker Compose:
+
+1. **Build and run the services**:
+   ```bash
+   docker-compose up
+   ```
+
+2. **Access the services**:
+   - **FastAPI App**: `http://localhost:8000`
+   - **pgAdmin4**: `http://localhost:5050` (can be accessed from the credentials specified in `.env.dev`)
+   - **PostgreSQL**: Can be accessed from pgAdmin4 the credentials specified in `.env.dev`.
+---
+
+### Database Migrations (Using Alembic) 
+
+We are using **Alembic** to handle database schema migrations. Alembic allows us to track changes in the database schema over time and apply them consistently across different environments (development, testing, production).
+
+#### 1. Generating a New Migration
+
+Whenever you make changes to your models and want to reflect those changes in the database schema, you need to generate a migration script.
+   ```bash
+   docker-compose exec web alembic revision --autogenerate -m "<migration message>"
+   ```
+
+   This command will generate a new migration script in the `alembic/versions` directory based on the differences between the current state of your database and the state of your SQLAlchemy models. The `-m` flag allows you to provide a message for the migration (e.g., "create initial tables").
+
+#### 2. Applying the Migration
+
+After generating a migration, you need to apply it to your database to update its schema.
+   ```bash
+   docker-compose exec web alembic upgrade head
+   ```
+
+   This command will apply the latest migration(s) to your database. The `head` argument ensures that all migrations up to the latest one are applied.
+
+---
+
+### **pgAdmin4 Configuration**
+
+To manage the PostgreSQL database with **pgAdmin4**:
+1. Open `http://localhost:5050` in your browser.
+2. Log in with:
+   - **Email**: `admin@example.com`
+   - **Password**: `admin`
+3. Add a new server:
+   - **Host**: `db`
+   - **Port**: `5432`
+   - **Username**: `postgres`
+   - **Password**: `devpassword`
+
+This allows you to view and manage your PostgreSQL database in pgAdmin4.
+
+---
+
+### **Next Steps**
+1. **Development**: Continue adding business logic and endpoints to the FastAPI app. Use `.env.dev`.
+2. **Testing**: Set up unit tests and integration tests. Use `.env.test`.
+3. **Production**: Finalize the production environment and ensure the configurations are production-ready using `.env.prod`.
+
+---
+
+## Target Apps (To Be Developed)
 
 ### **1. User Management**
    - **Authentication**: JWT-based login, registration, and social OAuth logins (Google, Facebook, Steam).
@@ -152,17 +179,6 @@ This will start the backend on `http://localhost:8000`.
 
 ---
 
-## API Documentation
-
-The backend uses **FastAPI's automatic interactive documentation**.
-
-- Visit the **Swagger UI** at: `http://127.0.0.1:8000/docs`
-- Visit the **Redoc documentation** at: `http://127.0.0.1:8000/redoc`
-
-These pages provide detailed information about all available endpoints, their request parameters, and response formats.
-
----
-
 ## Testing
 
 You can run automated tests to ensure the backend functions correctly. To run the test suite:
@@ -178,26 +194,6 @@ You can run automated tests to ensure the backend functions correctly. To run th
    ```
 
 Test coverage includes user management, game state management, in-game actions, and more.
-
----
-
-## Deployment
-
-For production deployment, the backend can be hosted using services like **Render**, **AWS EC2**, or **Heroku**.
-
-1. **Set up environment variables** using the `.env` file (or a similar approach depending on your hosting provider).
-2. **Build and deploy the Docker container** (if using Docker).
-3. Ensure SSL is configured using **Nginx** with **Let’s Encrypt** for HTTPS deployment.
-
----
-
-## Contributing
-
-1. Fork the repository.
-2. Create a new feature branch: `git checkout -b feature-name`.
-3. Commit your changes: `git commit -m 'Add some feature'`.
-4. Push the branch: `git push origin feature-name`.
-5. Submit a pull request.
 
 ---
 
