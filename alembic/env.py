@@ -6,7 +6,7 @@ from alembic import context
 from dotenv import load_dotenv
 
 # Load .env file
-env = os.getenv('ENVIRONMENT', 'dev')  # Default to dev environment
+env = os.getenv('ENVIRONMENT')
 dotenv_path = f'.env.{env}'
 load_dotenv(dotenv_path)
 
@@ -21,10 +21,20 @@ POSTGRES_USER = os.getenv("POSTGRES_USER")
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
 POSTGRES_DB = os.getenv("POSTGRES_DB")
 DB_HOST = os.getenv("DB_HOST")
-POSTGRES_PORT = os.getenv("POSTGRES_PORT")
+POSTGRES_PORT = 5432
 
 database_url = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{DB_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
 config.set_main_option("sqlalchemy.url", database_url)
+
+# Set environment-specific migrations folder
+if env == 'dev':
+    version_path = 'alembic/migrations/dev_versions'
+elif env == 'prod':
+    version_path = 'alembic/migrations/prod_versions'
+elif env == 'test':
+    version_path = 'alembic/migrations/test_versions'
+else:
+    raise ValueError("Unknown environment")
 
 # Dynamically import models from each service
 def get_models_metadata():
@@ -56,6 +66,8 @@ def run_migrations_offline():
     )
 
     with context.begin_transaction():
+        config.set_main_option("script_location", version_path)
+        config.set_main_option("version_locations", version_path)
         context.run_migrations()
 
 def run_migrations_online():
@@ -72,7 +84,14 @@ def run_migrations_online():
         )
 
         with context.begin_transaction():
+            config.set_main_option("script_location", version_path)
+            config.set_main_option("version_locations", version_path)
             context.run_migrations()
+
+
+
+config.set_main_option("script_location", version_path)
+config.set_main_option("version_locations", version_path)
 
 if context.is_offline_mode():
     run_migrations_offline()

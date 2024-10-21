@@ -75,6 +75,16 @@ The project uses Docker Compose to orchestrate services (FastAPI app, PostgreSQL
 - **redis**: Redis caching container.
 - **pgadmin**: pgAdmin4 container for managing PostgreSQL databases.
 
+### Prerequisites (Windows):
+#### `make`
+In order to utilize the app, it is highly recommended to download and install `make` for `Git` in order to be able to utilize it in `git bash` terminal. It will be highly referenced in this project; as it makes the handling of the different environments & tests that much easier.
+
+- Go to ezwinports, https://sourceforge.net/projects/ezwinports/files/
+- Download make-4.1-2-without-guile-w32-bin.zip (get the version without guile)
+- Extract zip
+- Copy the contents to C:\Program Files\Git\mingw64\ merging the folders, but do NOT overwrite/replace any exisiting files.
+
+
 ### Running the Application (DEV Environment)
 
 After first creating `.env.dev`, to start the application with Docker Compose:

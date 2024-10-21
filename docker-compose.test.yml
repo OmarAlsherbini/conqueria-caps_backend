@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  web-test:
+    image: python:3.11-slim
+    container_name: fastapi-app-test
+    build: .
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "${FASTAPI_PORT:-8001}:8000"  # FastAPI app port for test
+    env_file:
+      - .env.test    # Use the .env.test file for test
+    depends_on:
+      - db-test
+      - redis-test
+    networks:
+      - backend_network_test
+
+  db-test:
+    image: postgres:15
+    container_name: postgres-db-test
+    env_file:
+      - .env.test    # Use the .env.test file for test
+    volumes:
+      - postgres_data_test:/var/lib/postgresql/data
+      - ./empty_db.sh:/usr/local/bin/empty_db.sh  # Mount a script to empty the database into the container
+    ports:
+      - "${POSTGRES_PORT:-5433}:5432"  # PostgreSQL port for test
+    networks:
+      - backend_network_test
+
+  redis-test:
+    image: redis:7.2
+    container_name: redis-cache-test
+    ports:
+      - "${REDIS_PORT:-6380}:6379"  # Redis port for test
+    networks:
+      - backend_network_test
+  
+  pgadmin-test:
+    image: dpage/pgadmin4:8.12
+    container_name: pgadmin-test
+    env_file:
+      - .env.test    # Use the .env.test file for test
+    ports:
+      - "${PGADMIN_PORT:-5051}:80"  # Expose pgAdmin on port 5051
+    depends_on:
+      - db-test
+    networks:
+      - backend_network_test
+
+volumes:
+  postgres_data_test:
+  redis_data_test:
+
+networks:
+  backend_network_test:
+    name: backend_network_test

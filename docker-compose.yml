@@ -3,7 +3,7 @@ version: '3.8'
 services:
   web:
     image: python:3.11-slim
-    container_name: fastapi-app
+    container_name: fastapi-app-${ENVIRONMENT:-dev}
     build: .
     volumes:
       - .:/usr/src/app
@@ -20,7 +20,7 @@ services:
 
   db:
     image: postgres:15
-    container_name: postgres-db
+    container_name: postgres-db-${ENVIRONMENT:-dev}
     env_file:
       - .env.${ENVIRONMENT:-dev}    # Use the .env.dev file to define env variables for db service
     volumes:
@@ -33,15 +33,15 @@ services:
 
   redis:
     image: redis:7.2
-    container_name: redis-cache
+    container_name: redis-cache-${ENVIRONMENT:-dev}
     ports:
       - "${REDIS_PORT:-6379}:6379"  # Redis port from .env file, default to 6379
     networks:
       - backend_network
   
   pgadmin:
-    image: dpage/pgadmin4:8.1   # pgAdmin4 Docker image
-    container_name: pgadmin
+    image: dpage/pgadmin4:8.12   # pgAdmin4 Docker image
+    container_name: pgadmin-${ENVIRONMENT:-dev}
     env_file:
       - .env.${ENVIRONMENT:-dev}    # Use the .env.dev file to define env variables for db service
     ports:
@@ -58,4 +58,4 @@ volumes:
 networks:
   bridge:
   backend_network:
-    name: backend_network
+    name: backend_network-${ENVIRONMENT:-dev}

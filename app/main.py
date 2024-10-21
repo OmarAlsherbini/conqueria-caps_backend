@@ -2,37 +2,29 @@ from fastapi import FastAPI
 import importlib
 import os
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import HTTPBearer
+from fastapi.openapi.models import HTTPBearer as HTTPBearerModel
 
 app = FastAPI(
     title="Conqueria Caps Backend",
     docs_url="/",                 # Swagger UI at root
     openapi_url="/openapi.json",   # OpenAPI schema JSON at this URL
-    redoc_url="/redoc"                # ReDoc URL
+    redoc_url="/redoc"             # ReDoc URL
 )
 
-def load_routers(app: FastAPI):
-    """Dynamically load and include routers from all apps."""
-    apps_dir = os.path.join(os.path.dirname(__file__), "..", "apps")
-    for app_name in os.listdir(apps_dir):
-        app_path = os.path.join(apps_dir, app_name)
-        if os.path.isdir(app_path):
-            try:
-                # Import the routers.py module dynamically
-                module = importlib.import_module(f"apps.{app_name}.routers")
-                if hasattr(module, "router"):
-                    app.include_router(module.router)
-                    print(f"Loaded router from {app_name}")
-            except ModuleNotFoundError:
-                print(f"No router found in {app_name}")
-                continue
-
-
-@app.get("/")
-def read_root():
-    return {"message": "Welcome to the Strategy Board Game!"}
+# Define a simple Bearer token scheme
+http_bearer = HTTPBearer()
 
 # Call the function to load all routers
-load_routers(app)
+def load_routers(app: FastAPI):
+    """Dynamically load and include routers from all apps."""
+    apps_dir = os.path.join(os.path.dirname(__file__), ".")
+    for app_name in os.listdir(apps_dir):
+        app_path = os.path.join(apps_dir, app_name)
+        if os.path.isdir(app_path) and os.path.exists(os.path.join(app_path, "routers.py")):
+            module_name = f"app.{app_name}.routers"
+            module = importlib.import_module(module_name)
+            app.include_router(module.router)
 
 # CORS setup
 origins = [
@@ -48,3 +40,39 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Backup the original openapi method
+original_openapi = app.openapi
+
+# OpenAPI schema modifications to allow Bearer token input
+def custom_openapi():
+    if app.openapi_schema:
+        return app.openapi_schema
+
+    openapi_schema = original_openapi()
+
+    # Add security scheme for Bearer token (NOT OAuth2)
+    openapi_schema["components"]["securitySchemes"] = {
+        "BearerAuth": {
+            "type": "http",
+            "scheme": "bearer",
+            "bearerFormat": "JWT"
+        }
+    }
+
+    # Set global security for the endpoints
+    for path in openapi_schema["paths"]:
+        for method in openapi_schema["paths"][path]:
+            if "security" not in openapi_schema["paths"][path][method]:
+                openapi_schema["paths"][path][method]["security"] = [{"BearerAuth": []}]
+    
+    app.openapi_schema = openapi_schema
+    return app.openapi_schema
+
+app.openapi = custom_openapi
+
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to the Strategy Board Game!"}
+
+# Load routers
+load_routers(app)

@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  web-prod:
+    image: python:3.11-slim
+    container_name: fastapi-app-prod
+    build: .
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "${FASTAPI_PORT:-8002}:8000"  # FastAPI app port for production
+    env_file:
+      - .env.prod    # Use the .env.prod file for production
+    depends_on:
+      - db-prod
+      - redis-prod
+    networks:
+      - backend_network_prod
+
+  db-prod:
+    image: postgres:15
+    container_name: postgres-db-prod
+    env_file:
+      - .env.prod    # Use the .env.prod file for production
+    volumes:
+      - postgres_data_prod:/var/lib/postgresql/data
+      - ./empty_db.sh:/usr/local/bin/empty_db.sh  # Mount a script to empty the database into the container
+    ports:
+      - "${POSTGRES_PORT:-5434}:5432"  # PostgreSQL port for production
+    networks:
+      - backend_network_prod
+
+  redis-prod:
+    image: redis:7.2
+    container_name: redis-cache-prod
+    ports:
+      - "${REDIS_PORT:-6381}:6379"  # Redis port for production
+    networks:
+      - backend_network_prod
+  
+  pgadmin-prod:
+    image: dpage/pgadmin4:8.12
+    container_name: pgadmin-prod
+    env_file:
+      - .env.prod    # Use the .env.prod file for production
+    ports:
+      - "${PGADMIN_PORT:-5052}:80"  # Expose pgAdmin on port 5052
+    depends_on:
+      - db-prod
+    networks:
+      - backend_network_prod
+
+volumes:
+  postgres_data_prod:
+  redis_data_prod:
+
+networks:
+  backend_network_prod:
+    name: backend_network_prod
