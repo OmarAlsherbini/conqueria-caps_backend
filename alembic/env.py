@@ -21,9 +21,9 @@ POSTGRES_USER = os.getenv("POSTGRES_USER")
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
 POSTGRES_DB = os.getenv("POSTGRES_DB")
 DB_HOST = os.getenv("DB_HOST")
-POSTGRES_PORT = 5432
+POSTGRES_PORT = os.getenv("POSTGRES_PORT")
 
-database_url = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{DB_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
+database_url = f"postgresql+psycopg2://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{DB_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
 config.set_main_option("sqlalchemy.url", database_url)
 
 # Set environment-specific migrations folder
@@ -33,6 +33,8 @@ elif env == 'prod':
     version_path = 'alembic/migrations/prod_versions'
 elif env == 'test':
     version_path = 'alembic/migrations/test_versions'
+elif env == 'db_only':
+    version_path = 'alembic/migrations/db_only_versions'
 else:
     raise ValueError("Unknown environment")
 

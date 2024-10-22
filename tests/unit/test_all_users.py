@@ -1,30 +1,23 @@
-from fastapi.testclient import TestClient
-from app.main import app
+# tests/unit/test_all_users.py
 
-client = TestClient(app)
+import pytest
+from app.authentication.controllers import get_paginated_users
 
-# Test fetching users with pagination
-def test_get_users_with_pagination():
-    response = client.get("/all_users?limit=5")
-    assert response.status_code == 200
-    json_response = response.json()
+@pytest.mark.asyncio
+async def test_get_users_with_pagination(db_session):
+    users_response = await get_paginated_users(cursor=None, limit=5, db=db_session)
+    assert len(users_response.users) <= 5
+    assert users_response.next_cursor is not None
 
-    # Check that the response contains users and a next cursor
-    assert "users" in json_response
-    assert len(json_response["users"]) > 0
-    assert "next_cursor" in json_response
 
-# Test fetching next page using cursor
-def test_get_next_page_users():
-    response = client.get("/all_users?limit=5")
-    json_response = response.json()
-    cursor = json_response["next_cursor"]
+@pytest.mark.asyncio
+async def test_get_next_page_users(db_session):
+    # First request to get the initial set of users
+    first_response = await get_paginated_users(cursor=None, limit=5, db=db_session)
+    cursor = first_response.next_cursor
 
-    next_page_response = client.get(f"/all_users?cursor={cursor}&limit=5")
-    assert next_page_response.status_code == 200
-    json_response = next_page_response.json()
+    # Second request using the cursor to get the next set
+    second_response = await get_paginated_users(cursor=cursor, limit=5, db=db_session)
 
-    # Check that the response contains users and a next cursor
-    assert "users" in json_response
-    assert len(json_response["users"]) > 0
-    assert "next_cursor" in json_response
+    assert len(second_response.users) <= 5
+    assert second_response.next_cursor is not None

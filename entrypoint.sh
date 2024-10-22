@@ -39,7 +39,7 @@ print_time=0
 
 # Check if PostgreSQL is up and running before starting
 echo "Waiting for PostgreSQL to be ready (timeout: $WAIT_TIMEOUT seconds)..."
-until nc -z $DB_HOST 5432; do
+until nc -z $DB_HOST ${POSTGRES_PORT}; do
   if [ $elapsed_time -ge $WAIT_TIMEOUT ]; then
     echo "Timeout: PostgreSQL did not become available in $WAIT_TIMEOUT seconds."
     exit 1

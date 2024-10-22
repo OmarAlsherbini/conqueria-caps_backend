@@ -26,7 +26,7 @@ services:
       - postgres_data_test:/var/lib/postgresql/data
       - ./empty_db.sh:/usr/local/bin/empty_db.sh  # Mount a script to empty the database into the container
     ports:
-      - "${POSTGRES_PORT:-5433}:5432"  # PostgreSQL port for test
+      - "5433:5432"  # PostgreSQL port for test
     networks:
       - backend_network_test
 

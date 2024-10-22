@@ -1,5 +1,6 @@
 alembic
 asyncpg  # For PostgreSQL async supportfastapi
+databases
 fastapi
 httpx
 passlib

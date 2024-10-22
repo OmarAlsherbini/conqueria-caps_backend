@@ -3,37 +3,32 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.session import get_db, SessionLocal
 from app.authentication.models import User
 from sqlalchemy import insert
-from contextlib import asynccontextmanager
 
-@asynccontextmanager
-async def get_db_override():
+# Properly handle the async generator for database sessions
+@pytest.fixture(scope="function")
+async def db_session():
     async with SessionLocal() as session:
         yield session
 
-@pytest.fixture(scope="function")
-async def db_session_override():
-    async with get_db_override() as session:
-        yield session
 
-# Seed test users into the database
 @pytest.fixture(scope="function", autouse=True)
-async def seed_test_data(db_session_override: AsyncSession):
+async def seed_test_data(db_session: AsyncSession):
     users = [
         {"email": "user1@example.com", "hashed_password": "password1", "is_active": True, "is_verified": True},
         {"email": "user2@example.com", "hashed_password": "password2", "is_active": True, "is_verified": True},
     ]
-
     for user in users:
         query = insert(User).values(user)
-        await db_session_override.execute(query)
+        await db_session.execute(query)
 
-    await db_session_override.commit()
+    await db_session.commit()
+    yield
 
-    yield  # Test runs here
+    # Cleanup after test
+    await db_session.execute("TRUNCATE TABLE users RESTART IDENTITY CASCADE")
+    await db_session.commit()
 
-    # Clean up after test
-    await db_session_override.execute("TRUNCATE TABLE users RESTART IDENTITY")
-    await db_session_override.commit()
+
 
 
 

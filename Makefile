@@ -85,6 +85,16 @@ up-dev:
 	$(DOCKER_COMPOSE_DEV) build --no-cache --build-arg ENVIRONMENT=dev
 	$(DOCKER_COMPOSE_DEV) up -d
 
+up-dev-no-docker:
+	ENVIRONMENT=db_only alembic upgrade head
+	ENVIRONMENT=db_only uvicorn app.main:app --port 8004 --reload
+
+up-dev-no-docker-alembic:
+	pip install -r requirements.txt
+	ENVIRONMENT=db_only alembic revision --autogenerate -m "Auto-Generated in local device" --version-path "migrations/db_only_versions"
+	ENVIRONMENT=db_only alembic upgrade head
+	ENVIRONMENT=db_only uvicorn app.main:app --port 8004 --reload
+
 up-log-dev:
 	clear && $(DOCKER_COMPOSE_DEV) build --no-cache --build-arg ENVIRONMENT=dev
 	$(DOCKER_COMPOSE_DEV) up -d && docker compose -f docker-compose.dev.yml logs -f web-dev

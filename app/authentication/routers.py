@@ -10,7 +10,7 @@ from typing import Optional
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")  # Use the correct login endpoint
 
-router = APIRouter()
+router = APIRouter(tags=["Authentication & Users"])
 
 @router.post("/sign-up")
 async def sign_up(user: UserCreate, background_tasks: BackgroundTasks, db: AsyncSession = Depends(get_db)):
