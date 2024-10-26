@@ -1,12 +1,12 @@
-from fastapi import APIRouter, Depends, BackgroundTasks, HTTPException
+from fastapi import APIRouter, Depends, BackgroundTasks, HTTPException, Query
 from app.authentication.controllers import sign_up_user, authenticate_user, forgot_password as forgot_password_controller, reset_password, verify_email_token
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.session import get_db
-from app.authentication.models import User, UserCreate, UserLogin, UserResponse, PaginatedUserResponse
 from fastapi.security import OAuth2PasswordBearer
 from app.authentication.jwt import verify_access_token
-from app.authentication.controllers import get_user_by_email, change_password, get_paginated_users
-from typing import Optional
+from app.authentication.controllers import get_user_by_email, change_password, list_users
+from app.authentication.schemas import UserListResponse, UserCreate, UserLogin, UserResponse
+from typing import Optional, List
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")  # Use the correct login endpoint
 
@@ -60,19 +60,38 @@ async def who_am_i(token: str = Depends(oauth2_scheme), db: AsyncSession = Depen
     # Fetch the user from the database using their email
     user = await get_user_by_email(user_email, db)
     
-    # If user is not found, return 401 Unauthorized
+    # If user is not found, return 404 Unauthorized
     if not user:
-        raise HTTPException(status_code=401, detail="User not authorized")
+        raise HTTPException(status_code=404, detail="User not found")
     
     # Return the user's details
     return UserResponse(email=user.email, is_active=user.is_active, is_verified=user.is_verified)
 
 
-# All users endpoint with cursor pagination
-@router.get("/all_users", response_model=PaginatedUserResponse)
-async def all_users(
-    cursor: Optional[int] = None,  # The cursor (id of the last fetched user)
-    limit: int = 10,  # Limit number of users per request (default to 10)
+# GET all users with pagination, sorting, and filters
+@router.get("/users", response_model=List[UserListResponse])
+async def get_users(
+    cursor: Optional[int] = None,
+    limit: int = Query(50, description="Results per page (default 50)"),
+    max_results: int = Query(1000, description="Maximum of 1000 results in total"),
+    is_active: Optional[bool] = Query(None, description="Filter by active status"),
+    is_verified: Optional[bool] = Query(None, description="Filter by email verification status"),
+    country_id: Optional[int] = Query(None, description="Filter by country ID"),
+    skill_points_ffa: Optional[bool] = Query(None, description="Sort by FFA skill points"),
+    skill_points_1v1: Optional[bool] = Query(None, description="Sort by 1v1 skill points"),
+    sort_order: str = Query("desc", description="Sort order (asc/desc)"),
+    name: Optional[str] = Query(None, description="Filter by name"),
+    username: Optional[str] = Query(None, description="Filter by username"),
+    email: Optional[str] = Query(None, description="Filter by email"),
     db: AsyncSession = Depends(get_db)
 ):
-    return await get_paginated_users(cursor, limit, db)
+    response = await list_users(
+        db, cursor, limit, max_results, is_active, is_verified, country_id, 
+        skill_points_ffa, skill_points_1v1, sort_order, name, username, email
+    )
+    return {
+        "users": response["users"],
+        "next_cursor": response["next_cursor"]
+    }
+
+

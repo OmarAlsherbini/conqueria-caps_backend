@@ -2,13 +2,25 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.authentication.jwt import create_access_token, verify_access_token, create_email_verification_token, \
     verify_email_verification_token, create_password_reset_token, verify_password_reset_token
 from app.utils.email import send_email_verification, send_password_reset_email
-from app.authentication.models import User, PaginatedUserResponse, UserResponse
+from app.authentication.models import User
+from app.authentication.schemas import UserListResponse, UserDetailResponse
+from app.hero.models import Hero
 from fastapi import HTTPException, BackgroundTasks, status
 from passlib.context import CryptContext
-from sqlalchemy import select
-from typing import Optional, List
+from sqlalchemy import select, and_, desc, asc
+from typing import Optional, List, Dict
+import random
+import string
+
+
+# Function to generate a random username based on email
+def generate_username(email: str) -> str:
+    base_username = email.split('@')[0]
+    random_suffix = ''.join(random.choices(string.ascii_lowercase + string.digits, k=7))
+    return f"{base_username}_{random_suffix}"
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
 
 # Sign up user and send verification email
 async def sign_up_user(email: str, password: str, db: AsyncSession, background_tasks: BackgroundTasks):
@@ -20,9 +32,30 @@ async def sign_up_user(email: str, password: str, db: AsyncSession, background_t
     
     # Hash the password
     hashed_password = pwd_context.hash(password)
+    username = generate_username(email)
+
+    # Assign the default hero (Admiral Bubbles)
+    default_hero = await db.get(Hero, 1)  # Assuming hero id 1 is Admiral Bubbles
     
     # Create new user
-    new_user = User(email=email, hashed_password=hashed_password)
+    # Create new user
+    new_user = User(
+        email=email,
+        hashed_password=hashed_password,
+        username=username,
+        hero=default_hero,  # Assign default hero
+        gems=10,  # Default gems
+        tokens=100,  # Default tokens
+        skill_points=0,  # Default skill points
+        games_played=0,  # Default games played
+        ranked_games_played=0,  # Default ranked games played
+        wins=0,  # Default wins
+        losses=0,  # Default losses
+        win_rate=0.0,  # Default win rate
+        longest_win_streak=0,  # Default longest win streak
+        longest_loss_streak=0,  # Default longest loss streak
+    )
+
     db.add(new_user)
     await db.commit()
     await db.refresh(new_user)
@@ -120,21 +153,59 @@ async def get_user_by_email(email: str, db: AsyncSession) -> User:
     return user
 
 
-# Pagination function with cursor logic
-async def get_paginated_users(cursor: Optional[int], limit: int, db: AsyncSession) -> PaginatedUserResponse:
+# Controller to handle user retrieval with pagination, sorting, and filters
+async def list_users(
+    db: AsyncSession,
+    cursor: Optional[int] = None,
+    limit: int = 50,  # Smaller page size, e.g., 50 results per page
+    max_results: int = 1000,  # Max results a user can scroll down to
+    is_active: Optional[bool] = None,
+    is_verified: Optional[bool] = None,
+    country_id: Optional[int] = None,
+    skill_points_ffa: Optional[bool] = None,
+    skill_points_1v1: Optional[bool] = None,
+    sort_order: str = "desc",  # Can be 'asc' or 'desc'
+    name: Optional[str] = None,  # New filter for name
+    username: Optional[str] = None,  # New filter for username
+    email: Optional[str] = None,  # New filter for email
+) -> Dict:
     query = select(User).order_by(User.id).limit(limit)
 
-    # If cursor (i.e., last fetched user id) is provided, fetch users after that ID
+    # Apply cursor (pagination)
     if cursor:
         query = query.where(User.id > cursor)
+
+    # Apply filters (only the important ones)
+    filters = []
+    if is_active is not None:
+        filters.append(User.is_active == is_active)
+    if is_verified is not None:
+        filters.append(User.is_verified == is_verified)
+    if country_id is not None:
+        filters.append(User.country_id == country_id)
+    if name:
+        filters.append(User.name.ilike(f"%{name}%"))  # Case-insensitive name filter
+    if username:
+        filters.append(User.username.ilike(f"%{username}%"))  # Case-insensitive username filter
+    if email:
+        filters.append(User.email.ilike(f"%{email}%"))  # Case-insensitive email filter
+
+    if filters:
+        query = query.where(and_(*filters))
+
+    # Apply sorting based on skill points (either FFA or 1v1)
+    if skill_points_ffa:
+        query = query.order_by(desc(User.skill_points_ffa) if sort_order == "desc" else asc(User.skill_points_ffa))
+    if skill_points_1v1:
+        query = query.order_by(desc(User.skill_points_1v1) if sort_order == "desc" else asc(User.skill_points_1v1))
 
     result = await db.execute(query)
     users = result.scalars().all()
 
-    # Determine the next cursor (id of the last user returned)
-    next_cursor = users[-1].id if users else None
+    # Calculate the next cursor (if there are more results)
+    next_cursor = users[-1].id if len(users) == limit and cursor + limit <= max_results else None
 
-    # Format the response using Pydantic schema
-    users_response = [UserResponse(email=user.email, is_active=user.is_active, is_verified=user.is_verified) for user in users]
-    
-    return PaginatedUserResponse(users=users_response, next_cursor=next_cursor)
+    return {
+        "users": users,
+        "next_cursor": next_cursor
+    }

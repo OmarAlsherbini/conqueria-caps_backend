@@ -26,7 +26,7 @@ def verify_access_token(token: str):
             raise JWTError()
         return email
     except JWTError:
-        raise HTTPException(status_code=403, detail="Invalid authentication credentials")
+        raise HTTPException(status_code=401, detail="Invalid authentication credentials")
     
 def create_email_verification_token(email: str):
     data = {"sub": email, "purpose": "email_verification"}
