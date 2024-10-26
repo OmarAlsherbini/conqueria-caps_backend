@@ -15,14 +15,14 @@ app = FastAPI(
 # Define a simple Bearer token scheme
 http_bearer = HTTPBearer()
 
-# Call the function to load all routers
-def load_routers(app: FastAPI):
-    """Dynamically load and include routers from all apps."""
+# Call the function to load all routes
+def load_routes(app: FastAPI):
+    """Dynamically load and include routes from all apps."""
     apps_dir = os.path.join(os.path.dirname(__file__), ".")
     for app_name in os.listdir(apps_dir):
         app_path = os.path.join(apps_dir, app_name)
-        if os.path.isdir(app_path) and os.path.exists(os.path.join(app_path, "routers.py")):
-            module_name = f"app.{app_name}.routers"
+        if os.path.isdir(app_path) and os.path.exists(os.path.join(app_path, "routes.py")):
+            module_name = f"app.{app_name}.routes"
             module = importlib.import_module(module_name)
             app.include_router(module.router)
 
@@ -74,5 +74,5 @@ app.openapi = custom_openapi
 def read_root():
     return {"message": "Welcome to the Strategy Board Game!"}
 
-# Load routers
-load_routers(app)
+# Load routes
+load_routes(app)
