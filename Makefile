@@ -89,6 +89,9 @@ up-dev-no-docker:
 	ENVIRONMENT=db_only alembic upgrade head
 	ENVIRONMENT=db_only uvicorn app.main:app --port 8004 --reload
 
+up-db-only:
+	docker compose -f docker-compose.db_only.yml up -d && docker compose -f docker-compose.db_only.yml logs -f
+
 up-dev-no-docker-alembic:
 	pip install -r requirements.txt
 	ENVIRONMENT=db_only alembic revision --autogenerate -m "Auto-Generated in local device" --version-path "migrations/db_only_versions"

@@ -3,7 +3,7 @@ import numpy as np
 import random
 
 # Parameters for GIF
-width, height = 510, 510             # Canvas size
+width, height = 400, 510             # Canvas size
 n_particles = 200                       # Number of particles generated per frame
 num_frames = 20                        # Total frames (2 seconds at 10 FPS)
 stop_generating_frame = 5             # Frame to stop generating new particles
@@ -11,7 +11,7 @@ flame_source = (0, 255)               # Flamethrower nozzle position (left cente
 cone_angle = 45                        # Cone angle in degrees
 min_speed, max_speed = 15, 60         # Min and max speeds for particles
 particle_lifetime_range = (1, 6)       # Range of frames each particle will last
-particle_size_range = (25, 50)          # Size range of particles
+particle_size_range = (1, 40)          # Size range of particles
 fps = 60                               # Frames per second
 
 frames = []                            # List to store each frame as an image

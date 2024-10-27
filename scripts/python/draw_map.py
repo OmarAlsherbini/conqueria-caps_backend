@@ -8,6 +8,7 @@ fig, ax = plt.subplots(figsize=(4000, 2200), dpi=1)  # 4000x2200 resolution
 
 # Define coordinates for cities
 cities = [(500, 275), (500, 1925), (3500, 1925), (3500, 275), (2000, 1100)]
+outposts = [(500, 1100), (3500, 1100), (2000, 275), (2000, 1925), (1500, 825), (2500, 825), (2500, 1375), (1500, 1375)]
 
 # Define territories (4 corner territories as squares, 1 central as rhombus)
 territory1 = Polygon([(0, 0), (2000, 0), (2000, 550), (1000, 1100), (0, 1100)], closed=True, facecolor='gray', alpha=0.3, linewidth=180, edgecolor='black')
@@ -27,12 +28,9 @@ ax.add_patch(territory5)
 for city in cities:
     ax.add_patch(Circle(city, 25, color='black'))
 
-# Function to draw Bezier curve
-def draw_bezier(p0, p1, control1, control2, width=400, color='black'):
-    t = np.linspace(0, 1, 100)
-    bezier_x = (1-t)**3 * p0[0] + 3*(1-t)**2 * t * control1[0] + 3*(1-t) * t**2 * control2[0] + t**3 * p1[0]
-    bezier_y = (1-t)**3 * p0[1] + 3*(1-t)**2 * t * control1[1] + 3*(1-t) * t**2 * control2[1] + t**3 * p1[1]
-    ax.plot(bezier_x, bezier_y, linewidth=width, color=color)
+# Add outposts as circles
+for outpost in outposts:
+    ax.add_patch(Circle(outpost, 25, color='black'))
 
 def draw_spline(points, num_points=500, color='black', linewidth=400):
     """
@@ -97,25 +95,13 @@ def spline_length(points, num_points=1000):
 
     return length
 
-# Territory 1 (bottom left) to Territory 5 (center)
-draw_bezier(cities[0], cities[4], (1500, 825), (1500, 825))
-
-# Territory 2 (top left) to Territory 5 (center)
-draw_bezier(cities[1], cities[4], (1500, 1375), (1500, 1375))
-
-# Territory 3 (top right) to Territory 5 (center)
-draw_bezier(cities[2], cities[4], (2500, 1375), (2500, 1375))
-
-# Territory 4 (bottom right) to Territory 5 (center)
-draw_bezier(cities[3], cities[4], (2500, 825), (2500, 825))
-
 # Define your key points for the path (these are the equivalent of your waypoints)
 curve1 = np.array([
-    [500, 275], 
-    [300, 481.25],
+    [500, 1100], 
+    [300, 893.75],
     [700, 687.5], 
-    [300, 893.75],  
-    [500, 1100]
+    [300, 481.25],  
+    [500, 275]
 ])
 curve2 = np.array([  
     [500, 1100], 
@@ -125,11 +111,11 @@ curve2 = np.array([
     [500, 1925]
 ])
 curve3 = np.array([
-    [3500, 275], 
-    [3700, 481.25],
+    [3500, 1100], 
+    [3700, 893.75],
     [3300, 687.5], 
-    [3700, 893.75],  
-    [3500, 1100]
+    [3700, 481.25],  
+    [3500, 275]
 ])
 curve4 = np.array([  
     [3500, 1100], 
@@ -139,11 +125,11 @@ curve4 = np.array([
     [3500, 1925]
 ])
 curve5 = np.array([
-    [500, 275], 
-    [875, 150],
+    [2000, 275], 
+    [1625, 150],
     [1250, 400], 
-    [1625, 150],  
-    [2000, 275]
+    [875, 150],  
+    [500, 275]
 ])
 curve6 = np.array([
     [2000, 275], 
@@ -153,11 +139,11 @@ curve6 = np.array([
     [3500, 275]
 ])
 curve7 = np.array([
-    [500, 1925], 
-    [875, 2050],
+    [2000, 1925], 
+    [1625, 2050],
     [1250, 1800], 
-    [1625, 2050],  
-    [2000, 1925]
+    [875, 2050],  
+    [500, 1925]
 ])
 curve8 = np.array([
     [2000, 1925], 
@@ -165,6 +151,38 @@ curve8 = np.array([
     [2750, 1800], 
     [3125, 2050],  
     [3500, 1925]
+])
+curve9 = np.array([
+    [1500, 825], 
+    cities[0]
+])
+curve10 = np.array([
+    [1500, 825], 
+    cities[4]
+])
+curve11 = np.array([
+    [2500, 825], 
+    cities[1]
+])
+curve12 = np.array([
+    [2500, 825], 
+    cities[4]
+])
+curve13 = np.array([
+    [2500, 1375], 
+    cities[2]
+])
+curve14 = np.array([
+    [2500, 1375], 
+    cities[4]
+])
+curve15 = np.array([
+    [1500, 1375], 
+    cities[3]
+])
+curve16 = np.array([
+    [1500, 1375], 
+    cities[4]
 ])
 
 draw_spline(curve1, num_points=500)
@@ -175,6 +193,14 @@ draw_spline(curve5, num_points=500)
 draw_spline(curve6, num_points=500)
 draw_spline(curve7, num_points=500)
 draw_spline(curve8, num_points=500)
+draw_spline(curve9, num_points=500)
+draw_spline(curve10, num_points=500)
+draw_spline(curve11, num_points=500)
+draw_spline(curve12, num_points=500)
+draw_spline(curve13, num_points=500)
+draw_spline(curve14, num_points=500)
+draw_spline(curve15, num_points=500)
+draw_spline(curve16, num_points=500)
 
 # Add a border around the entire map (4000x2200) with 20px thick line
 outer_border = Polygon([(0, 0), (4000, 0), (4000, 2200), (0, 2200)], closed=True, edgecolor='black', linewidth=700, fill=None)
@@ -190,3 +216,4 @@ plt.subplots_adjust(left=0, right=1, top=1, bottom=0)
 
 # Display plot
 plt.show()
+fig.savefig("assets/generated/map1.png", dpi=1)

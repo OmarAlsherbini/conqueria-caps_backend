@@ -29,12 +29,13 @@ def load_routes(app: FastAPI):
 # CORS setup
 origins = [
     "http://localhost",
-    "http://localhost:3000",  # Adjust this based on frontend domain/port
+    "http://localhost:5173",  # Adjust this based on frontend domain/port
 ]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
+    # allow_origins=["*"],  # Adjust for production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
