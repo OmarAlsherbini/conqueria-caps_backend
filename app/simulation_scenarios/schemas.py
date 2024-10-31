@@ -25,7 +25,7 @@ class SimulationData(BaseModel):
     turret_accuracy: float
     cone_angle: float
     troop_delay: float
-    cone_angle: float
+    cone_angle: float | None
     troops_at_end: int
     troop_events: List[TroopEvent]
     turret_events: List[TurretEvent]

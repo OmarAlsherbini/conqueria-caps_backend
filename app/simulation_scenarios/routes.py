@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Query, HTTPException
-from app.simulation_scenarios.controllers import simulate_flamethrower_scenario, get_path_data, get_map_paths_data
+from app.simulation_scenarios.controllers import simulate_flamethrower_scenario, simulate_gunner_scenario, get_path_data, get_map_paths_data
 from app.simulation_scenarios.schemas import SimulationData, PathData, MapData
 
 router = APIRouter(tags=["Simulation Scenarios"])
@@ -7,6 +7,11 @@ router = APIRouter(tags=["Simulation Scenarios"])
 @router.get("/simulate/flamethrower", response_model=SimulationData)
 def get_flamethrower_simulation():
     simulation_data = simulate_flamethrower_scenario()
+    return simulation_data
+
+@router.get("/simulate/gunner", response_model=SimulationData)
+def simulate_gunner_endpoint():
+    simulation_data = simulate_gunner_scenario()
     return simulation_data
 
 @router.get("/simulate/maps/{map_id}", response_model=MapData)

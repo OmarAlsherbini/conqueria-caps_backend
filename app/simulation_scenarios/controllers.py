@@ -81,8 +81,8 @@ def simulate_flamethrower_scenario():
                     troop_events.append(TroopEvent(
                         timestamp=simulation_time,
                         troop_id=troop['id'],
-                        event_type='reach_target',
-                        data={}
+                        event_type='reach_target'
+                        # ,data={}
                     ))
                     continue
 
@@ -136,8 +136,8 @@ def simulate_flamethrower_scenario():
                         troop_events.append(TroopEvent(
                             timestamp=simulation_time,
                             troop_id=troop['id'],
-                            event_type='death',
-                            data={}
+                            event_type='death'
+                            # ,data={}
                         ))
 
         # Check if all troops are done
@@ -168,7 +168,174 @@ def simulate_flamethrower_scenario():
         turret_events=turret_events
     )
 
+
+
     return simulation_data
+
+def simulate_gunner_scenario():
+    # Parameters specific to the gunner turret
+    n_troops = 20
+    troop_hp = 100
+    troop_speed = 70
+    turret_damage = 20
+    turret_range = 300
+    turret_firerate = 6  # shots per second
+    turret_accuracy = 0.8  # 80% hit chance
+    t_i = 1  # Delay between troops entering the path
+
+    # Turret position
+    x_turret, y_turret = 400, 1512.5
+
+    # Path data (assuming path_id 2)
+    path_id = 2
+    num_points = 1000  # Number of points for smooth path
+
+    # Simulate getting path data
+    path_data = get_path_data(path_id, num_points)  # Implement get_path_data accordingly
+    x_smooth = [point.x for point in path_data.points]
+    y_smooth = [point.y for point in path_data.points]
+
+    # Create time parameter based on number of points
+    t_smooth = np.linspace(0, 1, len(x_smooth))
+
+    # Initialize troops
+    troops = [{'id': i, 'hp': troop_hp, 'start_time': t_i * i, 'alive': True, 'pos': None} for i in range(n_troops)]
+
+    # Initialize events
+    troop_events: List[TroopEvent] = []
+    turret_events: List[TurretEvent] = []
+
+    # Simulation parameters
+    simulation_time = 0
+    simulation_step = 0.1  # Time step in seconds
+    turret_reload_time = 1 / turret_firerate
+    last_fire_time = -turret_reload_time  # Initialize to allow immediate firing
+    turret_angle = 0
+    troops_at_end = 0
+
+    # Helper functions
+    def distance(p1, p2):
+        return np.hypot(p1[0] - p2[0], p1[1] - p2[1])
+
+    def calculate_angle(p1, p2):
+        return np.degrees(np.arctan2(p2[1] - p1[1], p2[0] - p1[0]))
+
+    # Run the simulation loop
+    max_simulation_duration = 300  # Max simulation time in seconds
+    while simulation_time < max_simulation_duration:
+        # Update troop positions
+        for troop in troops:
+            if troop['alive'] and simulation_time >= troop['start_time']:
+                # Move troop along the path
+                t_pos = min((simulation_time - troop['start_time']) * troop_speed / 600, 1)
+                x_pos = np.interp(t_pos, t_smooth, x_smooth)
+                y_pos = np.interp(t_pos, t_smooth, y_smooth)
+                troop['pos'] = (x_pos, y_pos)
+
+                if 'started' not in troop:
+                    troop['started'] = True
+                    troop_events.append(TroopEvent(
+                        timestamp=simulation_time,
+                        troop_id=troop['id'],
+                        event_type='start'
+                    ))
+
+                # Check if troop has reached the end
+                if t_pos >= 1:
+                    troop['alive'] = False
+                    troops_at_end += 1
+                    troop_events.append(TroopEvent(
+                        timestamp=simulation_time,
+                        troop_id=troop['id'],
+                        event_type='reach_target'
+                    ))
+                    continue
+
+        # Identify troops within turret range
+        troops_in_range = [troop for troop in troops if troop['alive'] and troop['pos'] and distance(troop['pos'], (x_turret, y_turret)) <= turret_range]
+
+        if troops_in_range:
+            # Find the troop closest to the end
+            closest_troop = min(troops_in_range, key=lambda t: distance(t['pos'], (x_smooth[-1], y_smooth[-1])))
+            # Update turret angle to point towards the closest troop
+            new_turret_angle = calculate_angle((x_turret, y_turret), closest_troop['pos'])
+            if new_turret_angle != turret_angle:
+                turret_angle = new_turret_angle
+                turret_events.append(TurretEvent(
+                    timestamp=simulation_time,
+                    event_type='rotate',
+                    angle=turret_angle
+                ))
+
+            # Turret firing logic
+            if (simulation_time - last_fire_time) >= turret_reload_time:
+                last_fire_time = simulation_time
+                turret_events.append(TurretEvent(
+                    timestamp=simulation_time,
+                    event_type='fire'
+                ))
+
+                # Apply damage to the closest troop
+                if random.random() < turret_accuracy:
+                    closest_troop['hp'] -= turret_damage
+                    troop_events.append(TroopEvent(
+                        timestamp=simulation_time,
+                        troop_id=closest_troop['id'],
+                        event_type='damage',
+                        data={'damage': turret_damage, 'remaining_hp': closest_troop['hp']}
+                    ))
+                    if closest_troop['hp'] <= 0:
+                        closest_troop['alive'] = False
+                        troop_events.append(TroopEvent(
+                            timestamp=simulation_time,
+                            troop_id=closest_troop['id'],
+                            event_type='death'
+                        ))
+        else:
+            # No troops in range
+            pass
+
+        # Check if all troops are done
+        if all(not troop['alive'] or troop['pos'] is None for troop in troops):
+            break
+
+        # Increment simulation time
+        simulation_time += simulation_step
+
+    # Prepare the data to return
+    simulation_data = SimulationData(
+        x_turret=x_turret,
+        y_turret=y_turret,
+        n_troops=n_troops,
+        troop_hp=troop_hp,
+        troop_speed=troop_speed,
+        turret_damage=turret_damage,
+        turret_range=turret_range,
+        turret_firerate=turret_firerate,
+        turret_accuracy=turret_accuracy,
+        cone_angle=None,  # Not applicable for gunner turret
+        troop_delay=t_i,
+        troops_at_end=troops_at_end,
+        troop_events=troop_events,
+        turret_events=turret_events
+    )
+
+    return simulation_data
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def get_path_data(path_id: int, num_points: int = 100) -> PathData:
     
