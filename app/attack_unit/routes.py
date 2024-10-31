@@ -5,13 +5,12 @@ from app.attack_unit.models import AttackUnit
 from app.attack_unit.schemas import AttackUnitCreate, AttackUnitUpdate, AttackUnitResponse
 from app.attack_unit.controllers import list_attack_units, create_attack_unit, update_attack_unit, delete_attack_unit
 from typing import Optional
-from fastapi.security import OAuth2PasswordBearer
+from app.authentication.jwt import oauth2_scheme
 
-router = APIRouter(tags=["Attack Units"])
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+router = APIRouter(tags=["Attack Units"], prefix="/attack-units")
 
 # GET all attack units with pagination and filters
-@router.get("/attack-units")
+@router.get("/")
 async def get_attack_units(
     cursor: Optional[int] = None,
     limit: int = 10,
@@ -23,7 +22,7 @@ async def get_attack_units(
 
 
 # GET attack unit by ID
-@router.get("/attack-units/{id}", response_model=AttackUnitResponse)
+@router.get("/{id}", response_model=AttackUnitResponse)
 async def get_attack_unit(id: int, db: AsyncSession = Depends(get_db)):
     attack_unit = await db.get(AttackUnit, id)
     if not attack_unit:
@@ -32,7 +31,7 @@ async def get_attack_unit(id: int, db: AsyncSession = Depends(get_db)):
 
 
 # POST create attack unit (admin access only)
-@router.post("/attack-units", response_model=AttackUnitResponse)
+@router.post("/", response_model=AttackUnitResponse)
 async def create_new_attack_unit(
     attack_unit: AttackUnitCreate,
     token: str = Depends(oauth2_scheme),
@@ -41,7 +40,7 @@ async def create_new_attack_unit(
     return await create_attack_unit(token, db, attack_unit.dict())
 
 # PUT update attack unit (admin access only)
-@router.put("/attack-units/{id}", response_model=AttackUnitResponse)
+@router.put("/{id}", response_model=AttackUnitResponse)
 async def update_existing_attack_unit(
     id: int,
     attack_unit: AttackUnitUpdate,
@@ -51,7 +50,7 @@ async def update_existing_attack_unit(
     return await update_attack_unit(token, db, id, attack_unit.dict())
 
 # DELETE attack unit (admin access only)
-@router.delete("/attack-units/{id}")
+@router.delete("/{id}")
 async def delete_existing_attack_unit(
     id: int,
     token: str = Depends(oauth2_scheme),

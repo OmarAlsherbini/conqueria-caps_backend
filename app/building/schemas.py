@@ -59,7 +59,7 @@ class DefensiveBuildingResponse(BaseModel):
     damage_radius: Optional[float] = None
 
     class Config:
-        orm_mode = True
+        from_attributes  = True
 
 # --------------------------------- Generative Building Schemas --------------------------------- #
 
@@ -90,7 +90,7 @@ class GenerativeBuildingResponse(BaseModel):
     money_per_turn: int
 
     class Config:
-        orm_mode = True
+        from_attributes  = True
 
 
 # Separate update schema for GenerativeBuilding
@@ -116,4 +116,4 @@ class BuildingListResponse(BaseModel):
     shop_cost: int
 
     class Config:
-        orm_mode = True
+        from_attributes  = True

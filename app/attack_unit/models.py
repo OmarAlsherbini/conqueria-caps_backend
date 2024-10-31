@@ -9,9 +9,9 @@ class AttackUnit(Base):
     type = Column(String, nullable=False)
     picture = Column(String, nullable=True)  # Path to image
     cost = Column(Integer, nullable=False)
-    health_points = Column(Float, nullable=False)
-    damage = Column(Float, nullable=False)
-    speed = Column(Float, nullable=False)
+    health_points = Column(Integer, nullable=False)
+    damage = Column(Integer, nullable=False)
+    speed = Column(Integer, nullable=False)
     accuracy = Column(Float, nullable=False)
     max_number_per_line = Column(Integer, nullable=False)
     is_air = Column(Boolean, default=False)
@@ -21,3 +21,4 @@ class AttackUnit(Base):
     shop_cost = Column(Integer, nullable=False)
     rarity = Column(String, nullable=False)
     description = Column(String, nullable=True)
+    number_of_units = Column(Integer, nullable=False)

@@ -8,11 +8,10 @@ from app.building.controllers import list_defensive_buildings, list_generative_b
   update_defensive_building, delete_defensive_building, create_generative_building, \
   update_generative_building, delete_generative_building
 from sqlalchemy import select
+from app.authentication.jwt import oauth2_scheme
 from typing import Optional, List
-from fastapi.security import OAuth2PasswordBearer
 
 router = APIRouter(tags=["Buildings"])
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 # -------------------------------- Defensive Buildings -------------------------------- #
 

@@ -41,7 +41,7 @@ class HeroResponse(BaseModel):
     shop_cost: int
 
     class Config:
-        orm_mode = True
+        from_attributes  = True
 
 
 # ListView schema (concise)
@@ -55,4 +55,4 @@ class HeroListResponse(BaseModel):
     shop_cost: int
 
     class Config:
-        orm_mode = True
+        from_attributes  = True

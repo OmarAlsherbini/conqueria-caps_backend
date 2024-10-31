@@ -8,12 +8,12 @@ from typing import Optional
 from fastapi.security import OAuth2PasswordBearer
 
 
-router = APIRouter(tags=["Heros"])
+router = APIRouter(tags=["Heros"], prefix="/heroes")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 
 # GET all heroes with pagination and filters
-@router.get("/heroes")
+@router.get("/")
 async def get_heroes(
     cursor: Optional[int] = None,
     limit: int = 10,
@@ -24,7 +24,7 @@ async def get_heroes(
 
 
 # GET hero by ID
-@router.get("/heroes/{id}", response_model=HeroResponse)
+@router.get("/{id}", response_model=HeroResponse)
 async def get_hero(id: int, db: AsyncSession = Depends(get_db)):
     hero = await db.get(Hero, id)
     if not hero:
@@ -33,7 +33,7 @@ async def get_hero(id: int, db: AsyncSession = Depends(get_db)):
 
 
 # POST create hero (admin access only)
-@router.post("/heroes", response_model=HeroResponse)
+@router.post("/", response_model=HeroResponse)
 async def create_new_hero(
     hero: HeroCreate,
     token: str = Depends(oauth2_scheme),
@@ -42,7 +42,7 @@ async def create_new_hero(
     return await create_hero(token, db, hero.dict())
 
 # PUT update hero (admin access only)
-@router.put("/heroes/{id}", response_model=HeroResponse)
+@router.put("/{id}", response_model=HeroResponse)
 async def update_existing_hero(
     id: int,
     hero: HeroUpdate,
@@ -52,7 +52,7 @@ async def update_existing_hero(
     return await update_hero(token, db, id, hero.dict())
 
 # DELETE hero (admin access only)
-@router.delete("/heroes/{id}")
+@router.delete("/{id}")
 async def delete_existing_hero(
     id: int,
     token: str = Depends(oauth2_scheme),
