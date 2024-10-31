@@ -51,35 +51,3 @@ class User(Base):
     favorite_unit = relationship("AttackUnit")
     favorite_building = relationship("Building")
     hero = relationship("Hero", back_populates="users")
-
-
-
-
-
-
-
-    
-    
-    games_played = Column(Integer, default=0)
-    time_played = Column(Float, default=0.0)
-    ranked_games_played = Column(Integer, default=0)
-    wins = Column(Integer, default=0)
-    losses = Column(Integer, default=0)
-    win_rate = Column(Float, default=0.0)
-    longest_win_streak = Column(Integer, default=0)
-    longest_loss_streak = Column(Integer, default=0)
-    favorite_unit_id = Column(Integer, ForeignKey('attack_units.id'), nullable=True)
-    favorite_building_id = Column(Integer, ForeignKey('buildings.id'), nullable=True)
-    preferred_language = Column(String(5), nullable=False, default="en")
-    preferred_color = Column(String(15), nullable=True)
-    hero_id = Column(Integer, ForeignKey('heroes.id'), nullable=True)
-    gems = Column(Integer, default=10)
-    tokens = Column(Integer, default=100)
-    subscription = Column(String(10), nullable=True)
-    description = Column(String(500), nullable=True)
-
-    # Relationships
-    country = relationship("Country", back_populates="users")
-    favorite_unit = relationship("AttackUnit")
-    favorite_building = relationship("Building")
-    hero = relationship("Hero", back_populates="users")

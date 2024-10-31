@@ -2,13 +2,10 @@ from fastapi import APIRouter, Depends, BackgroundTasks, HTTPException, Query
 from app.authentication.controllers import sign_up_user, authenticate_user, forgot_password as forgot_password_controller, reset_password, verify_email_token
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.session import get_db
-from fastapi.security import OAuth2PasswordBearer
-from app.authentication.jwt import verify_access_token
+from app.authentication.jwt import verify_access_token, oauth2_scheme
 from app.authentication.controllers import get_user_by_email, change_password, list_users
 from app.authentication.schemas import UserListResponse, UserCreate, UserLogin, UserResponse
 from typing import Optional, List
-
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")  # Use the correct login endpoint
 
 router = APIRouter(tags=["Authentication & Users"])
 

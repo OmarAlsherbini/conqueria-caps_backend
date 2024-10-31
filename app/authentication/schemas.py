@@ -8,7 +8,7 @@ class UserListResponse(BaseModel):
     is_active: bool
 
     class Config:
-        orm_mode = True
+        from_attributes  = True
 
 class UserCreate(BaseModel):
     email: EmailStr
@@ -50,9 +50,9 @@ class UserResponse(BaseModel):
     tokens: int
     subscription: Optional[str] = None
     description: Optional[str] = None
-
+ 
     class Config:
-        orm_mode = True  # Enables compatibility with SQLAlchemy objects
+        from_attributes  = True  # Enables compatibility with SQLAlchemy objects
 
 
 class UserDetailResponse(BaseModel):
@@ -85,7 +85,7 @@ class UserDetailResponse(BaseModel):
     description: Optional[str] = None
 
     class Config:
-        orm_mode = True  # Enables compatibility with SQLAlchemy objects
+        from_attributes  = True  # Enables compatibility with SQLAlchemy objects
 
 
 class UserLogin(BaseModel):

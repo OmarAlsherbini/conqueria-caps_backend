@@ -3,12 +3,11 @@ from app.authentication.jwt import create_access_token, verify_access_token, cre
     verify_email_verification_token, create_password_reset_token, verify_password_reset_token
 from app.utils.email import send_email_verification, send_password_reset_email
 from app.authentication.models import User
-from app.authentication.schemas import UserListResponse, UserDetailResponse
 from app.hero.models import Hero
 from fastapi import HTTPException, BackgroundTasks, status
 from passlib.context import CryptContext
 from sqlalchemy import select, and_, desc, asc
-from typing import Optional, List, Dict
+from typing import Optional, Dict
 import random
 import string
 
