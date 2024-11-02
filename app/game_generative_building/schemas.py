@@ -4,6 +4,17 @@ from typing import Optional, List
 class GameGenerativeBuildingCreate(BaseModel):
     generative_building_id: int
     building_slot_id: int
+    money_per_turn: int
+    alien_money_per_turn: int
+    name: str
+    owner_id: int
+    health_points: int
+    max_health_points: int
+    cost: int
+    is_alien: bool = False
+    turns_to_be_complete: int
+    location: List[int]
+
 
 class GameGenerativeBuildingBase(BaseModel):
     id: int
