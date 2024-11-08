@@ -1,0 +1,20 @@
+[
+  {
+    "email": "admin@game.com",
+    "hashed_password": "$2b$12$exampleHashedPasswordForAdmin",
+    "is_active": true,
+    "is_verified": true,
+    "is_admin": true,
+    "name": "Admin User",
+    "username": "adminuser"
+  },
+  {
+    "email": "user@game.com",
+    "hashed_password": "$2b$12$exampleHashedPasswordForUser",
+    "is_active": true,
+    "is_verified": true,
+    "is_admin": false,
+    "name": "Regular User",
+    "username": "regularuser"
+  }
+]

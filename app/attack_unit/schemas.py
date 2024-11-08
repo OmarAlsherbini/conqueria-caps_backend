@@ -5,7 +5,8 @@ from typing import Optional
 class AttackUnitCreate(BaseModel):
     name: str
     type: str
-    picture: Optional[str] = None
+    picture: str
+    in_game_picture: str
     cost: int
     health_points: int
     damage: int
@@ -27,6 +28,7 @@ class AttackUnitUpdate(BaseModel):
     name: Optional[str] = None
     type:  Optional[str] = None
     picture: Optional[str] = None
+    in_game_picture: Optional[str] = None
     cost: Optional[int] = None
     health_points: Optional[int] = None
     damage: Optional[int] = None
@@ -49,6 +51,7 @@ class AttackUnitResponse(BaseModel):
     name: str
     type: str
     picture: str
+    in_game_picture: str
     cost: int
     health_points: int
     damage: int
@@ -71,6 +74,7 @@ class AttackUnitResponse(BaseModel):
 class AttackUnitSimResponse(BaseModel):
     id: int
     type: str
+    in_game_picture: str
     health_points: int
     damage: int
     speed: int
@@ -88,6 +92,7 @@ class AttackUnitListResponse(BaseModel):
     name: str
     type: str  # Unit type (e.g., infantry, tank, etc.)
     picture: str
+    in_game_picture: str
     rarity: str
     shop_cost: int
     number_of_units: int

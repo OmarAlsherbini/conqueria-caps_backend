@@ -37,4 +37,4 @@ class PlayerInDB(PlayerBase):
     in_game_allies: Optional[List[int]]
 
     class Config:
-        orm_mode = True
+        from_attributes  = True

@@ -4,6 +4,13 @@ import os
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer
 from fastapi.openapi.models import HTTPBearer as HTTPBearerModel
+from app.db.session import get_db
+# from app.init_data.heroes import load_heroes
+from app.init_data.defensive_buildings import load_defensive_buildings
+from app.init_data.generative_buildings import load_generative_buildings
+from app.init_data.attack_units import load_attack_units
+from app.init_data.users import load_users
+from app.init_data.maps import load_maps
 
 app = FastAPI(
     title="Conqueria Caps Backend",
@@ -70,6 +77,18 @@ def custom_openapi():
     return app.openapi_schema
 
 app.openapi = custom_openapi
+
+
+# @app.on_event("startup")
+# async def startup_event():
+#     async with get_db() as db:
+#         # await load_heroes(db)
+#         await load_defensive_buildings(db)
+#         await load_generative_buildings(db)
+#         await load_attack_units(db)
+#         await load_users(db)
+#         await load_maps(db)
+
 
 @app.get("/")
 def read_root():

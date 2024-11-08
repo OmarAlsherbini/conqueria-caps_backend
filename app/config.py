@@ -8,7 +8,7 @@ dotenv_path = f'.env.{env}'
 
 class Settings(BaseSettings):
     # FastAPI
-    FASTAPI_PORT: int = 8000
+    FASTAPI_PORT: int
     
     # PostgreSQL Configuration
     POSTGRES_USER: str
@@ -40,6 +40,10 @@ class Settings(BaseSettings):
     # Verification links
     EMAIL_VERIFICATION_LINK: str
     PASSWORD_RESET_LINK: str
+
+    # App Passwords
+    ADMIN_PASSWORD: str
+    USER_PASSWORD: str
 
     class Config:
         env_file = dotenv_path

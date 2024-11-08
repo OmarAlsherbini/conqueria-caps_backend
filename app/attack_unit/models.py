@@ -8,6 +8,7 @@ class AttackUnit(Base):
     name = Column(String, nullable=False)
     type = Column(String, nullable=False)
     picture = Column(String, nullable=True)  # Path to image
+    in_game_picture = Column(String, nullable=True)  # Path to image
     cost = Column(Integer, nullable=False)
     health_points = Column(Integer, nullable=False)
     damage = Column(Integer, nullable=False)
@@ -20,5 +21,5 @@ class AttackUnit(Base):
     experience_value = Column(Integer, nullable=False)
     shop_cost = Column(Integer, nullable=False)
     rarity = Column(String, nullable=False)
-    description = Column(String, nullable=True)
     number_of_units = Column(Integer, nullable=False)
+    description = Column(String, nullable=True)

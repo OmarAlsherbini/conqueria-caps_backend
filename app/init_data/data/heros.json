@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Admiral Bubbles",
+    "rarity": "rare",
+    "civ": "European",
+    "role": "field",
+    "picture": "admiral_bubbles.webp",
+    "description": "Calm and collected, but often drifts off into daydreams about the sea. Loves tactical maneuvers, but gets easily distracted by shiny objects or the mention of boats.",
+    "catch_phrase": "Ah, the open sea... wait, where am I?",
+    "bonus_description": "All Rounder: +10% damage to all troops."
+  }
+]

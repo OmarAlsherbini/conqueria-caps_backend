@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, ARRAY, Float
+from sqlalchemy import Column, ForeignKey, Integer, ARRAY, JSON, Float
 from sqlalchemy.orm import relationship
 from app.db.base_class import Base
 
@@ -11,6 +11,7 @@ class BuildingSlot(Base):
     deployed_defensive_building_id = Column(Integer, ForeignKey("game_defensive_buildings.id"), nullable=True)
     deployed_generative_building_id = Column(Integer, ForeignKey("game_generative_buildings.id"), nullable=True)
     location = Column(ARRAY(Float), nullable=False)
+    targeting_paths = Column(JSON, nullable=True)
 
     # Relationships
     territory = relationship("GameTerritory", back_populates="building_slots")

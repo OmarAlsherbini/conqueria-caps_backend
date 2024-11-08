@@ -14,121 +14,144 @@
   "genre": "beta",
   "continents": {
     "1": {
-      "continent1_name": "Mini ConQ",
+      "continent_name": "Mini ConQ",
       "money_per_turn": 1000,
       "is_alien": false,
       "alien_money_per_turn": 0,
-      "continent1_territories": {
+      "continent_territories": {
         "1": {
           "name": "Bottom Left",
           "location": [500, 275],
           "is_alien": false,
           "adjacent_territories": [2, 4, 5],
-          "building_slots": [
-            {
-              "id": 1,
-              "location": [400, 687.5],
-              "targeting_path_ids": [1]
+          "building_slots": {
+            "1": {
+              "location": [400, 687],
+              "targeting_path_ids": {
+                "1": 0.326
+              }
             },
-            {
-              "id": 2,
+            "2": {
               "location": [500, 425],
-              "targeting_path_ids": [1, 3]
+              "targeting_path_ids": {
+                "1": 0.674,
+                "3": 0.936
+              }
             },
-            {
-              "id": 3,
+            "3": {
               "location": [440, 960],
-              "targeting_path_ids": [1]
+              "targeting_path_ids": {
+                "1": 0.299
+              }
             },
-            {
-              "id": 4,
+            "4": {
               "location": [235, 810],
-              "targeting_path_ids": [1]
+              "targeting_path_ids": {
+                "1": 0.239
+              }
             },
-            {
-              "id": 5,
+            "5": {
               "location": [215, 570],
-              "targeting_path_ids": [1]
+              "targeting_path_ids": {
+                "1": 0.768
+              }
             },
-            {
-              "id": 6,
+            "6": {
               "location": [100, 980],
-              "targeting_path_ids": [1]
+              "targeting_path_ids": {
+                "1": 0.143
+              }
             },
-            {
-              "id": 7,
+            "7": {
               "location": [825, 600],
-              "targeting_path_ids": [1, 3]
+              "targeting_path_ids": {
+                "1": 0.519,
+                "3": 0.613
+              }
             },
-            {
-              "id": 8,
+            "8": {
               "location": [400, 165],
-              "targeting_path_ids": [1, 2]
+              "targeting_path_ids": {
+                "1": 0.982,
+                "2": 0.985
+              }
             },
-            {
-              "id": 9,
+            "9": {
               "location": [90, 385],
-              "targeting_path_ids": [1]
+              "targeting_path_ids": {
+                "1": 0.858
+              }
             },
-            {
-              "id": 10,
+            "10": {
               "location": [1250, 290],
-              "targeting_path_ids": [2]
+              "targeting_path_ids": {
+                "2": 0.499
+              }
             },
-            {
-              "id": 11,
+            "11": {
               "location": [1035, 150],
-              "targeting_path_ids": [2]
+              "targeting_path_ids": {
+                "2": 0.688
+              }
             },
-            {
-              "id": 12,
+            "12": {
               "location": [1460, 150],
-              "targeting_path_ids": [2]
+              "targeting_path_ids": {
+                "2": 0.313
+              }
             },
-            {
-              "id": 13,
+            "13": {
               "location": [715, 250],
-              "targeting_path_ids": [2, 3]
+              "targeting_path_ids": {
+                "2": 0.927,
+                "3": 0.845
+              }
             },
-            {
-              "id": 14,
+            "14": {
               "location": [980, 400],
-              "targeting_path_ids": [2, 3]
+              "targeting_path_ids": {
+                "2": 0.628,
+                "3": 0.578
+              }
             },
-            {
-              "id": 15,
+            "15": {
               "location": [1250, 530],
-              "targeting_path_ids": [2, 3]
+              "targeting_path_ids": {
+                "2": 0.5,
+                "3": 0.316
+              }
             },
-            {
-              "id": 16,
+            "16": {
               "location": [1590, 355],
-              "targeting_path_ids": [2]
+              "targeting_path_ids": {
+                "2": 0.332
+              }
             },
-            {
-              "id": 17,
+            "17": {
               "location": [1785, 200],
-              "targeting_path_ids": [2]
+              "targeting_path_ids": {
+                "2": 0.145
+              }
             },
-            {
-              "id": 18,
+            "18": {
               "location": [1100, 740],
-              "targeting_path_ids": [3]
+              "targeting_path_ids": {
+                "3": 0.343
+              }
             },
-            {
-              "id": 19,
+            "19": {
               "location": [1485, 670],
-              "targeting_path_ids": [3]
+              "targeting_path_ids": {
+                "3": 0.077
+              }
             },
-            {
-              "id": 20,
+            "20": {
               "location": [795, 880]
             },
-            {
-              "id": 21,
+            "21": {
               "location": [1800, 400]
             }
-          ],
+          },
           "paths": {
             "1": {
               "name": "Outpost 1 - Bottom Left Highway",
@@ -15158,111 +15181,134 @@
           "location": [500, 1925],
           "is_alien": false,
           "adjacent_territories": [1, 3, 5],
-          "building_slots": [
-            {
-              "id": 22,
-              "location": [400, 1512.5],
-              "targeting_path_ids": [4]
+          "building_slots": {
+            "22": {
+              "location": [400, 1513],
+              "targeting_path_ids": {
+                "4": 0.326
+              }
             },
-            {
-              "id": 23,
+            "23": {
               "location": [500, 1775],
-              "targeting_path_ids": [4, 6]
+              "targeting_path_ids": {
+                "4": 0.674,
+                "6": 0.936
+              }
             },
-            {
-              "id": 24,
+            "24": {
               "location": [440, 1240],
-              "targeting_path_ids": [4]
+              "targeting_path_ids": {
+                "4": 0.299
+              }
             },
-            {
-              "id": 25,
+            "25": {
               "location": [235, 1390],
-              "targeting_path_ids": [4]
+              "targeting_path_ids": {
+                "4": 0.239
+              }
             },
-            {
-              "id": 26,
+            "26": {
               "location": [215, 1630],
-              "targeting_path_ids": [4]
+              "targeting_path_ids": {
+                "4": 0.768
+              }
             },
-            {
-              "id": 27,
+            "27": {
               "location": [100, 1220],
-              "targeting_path_ids": [4]
+              "targeting_path_ids": {
+                "4": 0.143
+              }
             },
-            {
-              "id": 28,
+            "28": {
               "location": [825, 1600],
-              "targeting_path_ids": [4, 6]
+              "targeting_path_ids": {
+                "4": 0.519,
+                "6": 0.613
+              }
             },
-            {
-              "id": 29,
+            "29": {
               "location": [400, 2035],
-              "targeting_path_ids": [4, 5]
+              "targeting_path_ids": {
+                "4": 0.982,
+                "5": 0.985
+              }
             },
-            {
-              "id": 30,
+            "30": {
               "location": [90, 1815],
-              "targeting_path_ids": [4]
+              "targeting_path_ids": {
+                "4": 0.858
+              }
             },
-            {
-              "id": 31,
+            "31": {
               "location": [1250, 1910],
-              "targeting_path_ids": [5]
+              "targeting_path_ids": {
+                "5": 0.5
+              }
             },
-            {
-              "id": 32,
+            "32": {
               "location": [1035, 2050],
-              "targeting_path_ids": [5]
+              "targeting_path_ids": {
+                "5": 0.688
+              }
             },
-            {
-              "id": 33,
+            "33": {
               "location": [1460, 2050],
-              "targeting_path_ids": [5]
+              "targeting_path_ids": {
+                "5": 0.313
+              }
             },
-            {
-              "id": 34,
+            "34": {
               "location": [715, 1950],
-              "targeting_path_ids": [5, 6]
+              "targeting_path_ids": {
+                "5": 0.927,
+                "6": 0.845
+              }
             },
-            {
-              "id": 35,
+            "35": {
               "location": [980, 1800],
-              "targeting_path_ids": [5, 6]
+              "targeting_path_ids": {
+                "5": 0.628,
+                "6": 0.578
+              }
             },
-            {
-              "id": 36,
+            "36": {
               "location": [1250, 1670],
-              "targeting_path_ids": [5, 6]
+              "targeting_path_ids": {
+                "5": 0.499,
+                "6": 0.316
+              }
             },
-            {
-              "id": 37,
+            "37": {
               "location": [1590, 1845],
-              "targeting_path_ids": [5]
+              "targeting_path_ids": {
+                "5": 0.332
+              }
             },
-            {
-              "id": 38,
+            "38": {
               "location": [1785, 2000],
-              "targeting_path_ids": [5]
+              "targeting_path_ids": {
+                "5": 0.145
+              }
             },
-            {
-              "id": 39,
+            "39": {
               "location": [1100, 1460],
-              "targeting_path_ids": [6]
+              "targeting_path_ids": {
+                "6": 0.343
+              }
             },
-            {
-              "id": 40,
+            "40": {
               "location": [1485, 1530],
-              "targeting_path_ids": [6]
+              "targeting_path_ids": {
+                "6": 0.077
+              }
             },
-            {
-              "id": 41,
+            "41": {
               "location": [795, 1320]
             },
-            {
-              "id": 42,
+            "42": {
               "location": [1800, 1800]
             }
-          ],
+          },
           "paths": {
             "4": {
               "name": "Outpost 1 - Top Left Highway",
@@ -30292,111 +30338,134 @@
           "location": [3500, 1925],
           "is_alien": false,
           "adjacent_territories": [2, 4, 5],
-          "building_slots": [
-            {
-              "id": 43,
-              "location": [3600, 1512.5],
-              "targeting_path_ids": [7]
+          "building_slots": {
+            "43": {
+              "location": [3600, 1513],
+              "targeting_path_ids": {
+                "7": 0.326
+              }
             },
-            {
-              "id": 44,
+            "44": {
               "location": [3500, 1775],
-              "targeting_path_ids": [7, 9]
+              "targeting_path_ids": {
+                "7": 0.674,
+                "9": 0.936
+              }
             },
-            {
-              "id": 45,
+            "45": {
               "location": [3560, 1240],
-              "targeting_path_ids": [7]
+              "targeting_path_ids": {
+                "7": 0.299
+              }
             },
-            {
-              "id": 46,
+            "46": {
               "location": [3765, 1390],
-              "targeting_path_ids": [7]
+              "targeting_path_ids": {
+                "7": 0.239
+              }
             },
-            {
-              "id": 47,
+            "47": {
               "location": [3785, 1630],
-              "targeting_path_ids": [7]
+              "targeting_path_ids": {
+                "7": 0.768
+              }
             },
-            {
-              "id": 48,
+            "48": {
               "location": [3900, 1220],
-              "targeting_path_ids": [7]
+              "targeting_path_ids": {
+                "7": 0.143
+              }
             },
-            {
-              "id": 49,
+            "49": {
               "location": [3175, 1600],
-              "targeting_path_ids": [7, 9]
+              "targeting_path_ids": {
+                "7": 0.519,
+                "9": 0.613
+              }
             },
-            {
-              "id": 50,
+            "50": {
               "location": [3600, 2035],
-              "targeting_path_ids": [7, 8]
+              "targeting_path_ids": {
+                "7": 0.982,
+                "8": 0.985
+              }
             },
-            {
-              "id": 51,
+            "51": {
               "location": [3910, 1815],
-              "targeting_path_ids": [7]
+              "targeting_path_ids": {
+                "7": 0.858
+              }
             },
-            {
-              "id": 52,
+            "52": {
               "location": [2750, 1910],
-              "targeting_path_ids": [8]
+              "targeting_path_ids": {
+                "8": 0.5
+              }
             },
-            {
-              "id": 53,
+            "53": {
               "location": [2965, 2050],
-              "targeting_path_ids": [8]
+              "targeting_path_ids": {
+                "8": 0.688
+              }
             },
-            {
-              "id": 54,
+            "54": {
               "location": [2540, 2050],
-              "targeting_path_ids": [8]
+              "targeting_path_ids": {
+                "8": 0.313
+              }
             },
-            {
-              "id": 55,
+            "55": {
               "location": [3285, 1950],
-              "targeting_path_ids": [8, 9]
+              "targeting_path_ids": {
+                "8": 0.927,
+                "9": 0.845
+              }
             },
-            {
-              "id": 56,
+            "56": {
               "location": [3020, 1800],
-              "targeting_path_ids": [8, 9]
+              "targeting_path_ids": {
+                "8": 0.628,
+                "9": 0.578
+              }
             },
-            {
-              "id": 57,
+            "57": {
               "location": [2750, 1670],
-              "targeting_path_ids": [8, 9]
+              "targeting_path_ids": {
+                "8": 0.499,
+                "9": 0.316
+              }
             },
-            {
-              "id": 58,
+            "58": {
               "location": [2410, 1845],
-              "targeting_path_ids": [8]
+              "targeting_path_ids": {
+                "8": 0.332
+              }
             },
-            {
-              "id": 59,
+            "59": {
               "location": [2215, 2000],
-              "targeting_path_ids": [8]
+              "targeting_path_ids": {
+                "8": 0.145
+              }
             },
-            {
-              "id": 60,
+            "60": {
               "location": [2900, 1460],
-              "targeting_path_ids": [9]
+              "targeting_path_ids": {
+                "9": 0.343
+              }
             },
-            {
-              "id": 61,
+            "61": {
               "location": [2515, 1530],
-              "targeting_path_ids": [9]
+              "targeting_path_ids": {
+                "9": 0.077
+              }
             },
-            {
-              "id": 62,
+            "62": {
               "location": [3205, 1320]
             },
-            {
-              "id": 63,
+            "63": {
               "location": [2200, 1800]
             }
-          ],
+          },
           "paths": {
             "7": {
               "name": "Outpost 3 - Top Right Highway",
@@ -45426,111 +45495,134 @@
           "location": [3500, 275],
           "is_alien": false,
           "adjacent_territories": [1, 3, 5],
-          "building_slots": [
-            {
-              "id": 64,
-              "location": [3600, 687.5],
-              "targeting_path_ids": [10]
+          "building_slots": {
+            "64": {
+              "location": [3600, 687],
+              "targeting_path_ids": {
+                "10": 0.326
+              }
             },
-            {
-              "id": 65,
+            "65": {
               "location": [3500, 425],
-              "targeting_path_ids": [10, 12]
+              "targeting_path_ids": {
+                "10": 0.674,
+                "12": 0.936
+              }
             },
-            {
-              "id": 66,
+            "66": {
               "location": [3560, 960],
-              "targeting_path_ids": [10]
+              "targeting_path_ids": {
+                "10": 0.299
+              }
             },
-            {
-              "id": 67,
+            "67": {
               "location": [3765, 810],
-              "targeting_path_ids": [10]
+              "targeting_path_ids": {
+                "10": 0.239
+              }
             },
-            {
-              "id": 68,
+            "68": {
               "location": [3785, 570],
-              "targeting_path_ids": [10]
+              "targeting_path_ids": {
+                "10": 0.768
+              }
             },
-            {
-              "id": 69,
+            "69": {
               "location": [3900, 980],
-              "targeting_path_ids": [10]
+              "targeting_path_ids": {
+                "10": 0.143
+              }
             },
-            {
-              "id": 70,
+            "70": {
               "location": [3175, 600],
-              "targeting_path_ids": [10, 12]
+              "targeting_path_ids": {
+                "10": 0.519,
+                "12": 0.613
+              }
             },
-            {
-              "id": 71,
+            "71": {
               "location": [3600, 165],
-              "targeting_path_ids": [10, 11]
+              "targeting_path_ids": {
+                "10": 0.982,
+                "11": 0.985
+              }
             },
-            {
-              "id": 72,
+            "72": {
               "location": [3910, 385],
-              "targeting_path_ids": [10]
+              "targeting_path_ids": {
+                "10": 0.858
+              }
             },
-            {
-              "id": 73,
+            "73": {
               "location": [2750, 290],
-              "targeting_path_ids": [11]
+              "targeting_path_ids": {
+                "11": 0.499
+              }
             },
-            {
-              "id": 74,
+            "74": {
               "location": [2965, 150],
-              "targeting_path_ids": [11]
+              "targeting_path_ids": {
+                "11": 0.688
+              }
             },
-            {
-              "id": 75,
+            "75": {
               "location": [2540, 150],
-              "targeting_path_ids": [11]
+              "targeting_path_ids": {
+                "11": 0.313
+              }
             },
-            {
-              "id": 76,
+            "76": {
               "location": [3285, 250],
-              "targeting_path_ids": [11, 12]
+              "targeting_path_ids": {
+                "11": 0.927,
+                "12": 0.845
+              }
             },
-            {
-              "id": 77,
+            "77": {
               "location": [3020, 400],
-              "targeting_path_ids": [11, 12]
+              "targeting_path_ids": {
+                "11": 0.628,
+                "12": 0.578
+              }
             },
-            {
-              "id": 78,
+            "78": {
               "location": [2750, 530],
-              "targeting_path_ids": [11, 12]
+              "targeting_path_ids": {
+                "11": 0.5,
+                "12": 0.316
+              }
             },
-            {
-              "id": 79,
+            "79": {
               "location": [2410, 355],
-              "targeting_path_ids": [11]
+              "targeting_path_ids": {
+                "11": 0.332
+              }
             },
-            {
-              "id": 80,
+            "80": {
               "location": [2215, 200],
-              "targeting_path_ids": [11]
+              "targeting_path_ids": {
+                "11": 0.145
+              }
             },
-            {
-              "id": 81,
+            "81": {
               "location": [2900, 740],
-              "targeting_path_ids": [12]
+              "targeting_path_ids": {
+                "12": 0.343
+              }
             },
-            {
-              "id": 82,
+            "82": {
               "location": [2515, 670],
-              "targeting_path_ids": [12]
+              "targeting_path_ids": {
+                "12": 0.077
+              }
             },
-            {
-              "id": 83,
+            "83": {
               "location": [3205, 880]
             },
-            {
-              "id": 84,
+            "84": {
               "location": [2200, 400]
             }
-          ],
+          },
           "paths": {
             "10": {
               "name": "Outpost 3 - Bottom Right Highway",
@@ -60560,124 +60652,144 @@
           "location": [2000, 1100],
           "is_alien": true,
           "adjacent_territories": [1, 2, 3, 4],
-          "building_slots": [
-            {
-              "id": 85,
+          "building_slots": {
+            "85": {
               "location": [2000, 1225],
-              "targeting_path_ids": [13, 16]
+              "targeting_path_ids": {
+                "13": 0.999,
+                "16": 0.999
+              }
             },
-            {
-              "id": 86,
+            "86": {
               "location": [2000, 1400]
             },
-            {
-              "id": 87,
+            "87": {
               "location": [2000, 975],
-              "targeting_path_ids": [14, 15]
+              "targeting_path_ids": {
+                "14": 0.999,
+                "15": 0.999
+              }
             },
-            {
-              "id": 88,
+            "88": {
               "location": [2000, 800]
             },
-            {
-              "id": 89,
+            "89": {
               "location": [1800, 1100],
-              "targeting_path_ids": [13, 14]
+              "targeting_path_ids": {
+                "13": 0.692,
+                "14": 0.692
+              }
             },
-            {
-              "id": 90,
+            "90": {
               "location": [1520, 1100]
             },
-            {
-              "id": 91,
+            "91": {
               "location": [2200, 1100],
-              "targeting_path_ids": [15, 16]
+              "targeting_path_ids": {
+                "15": 0.692,
+                "16": 0.692
+              }
             },
-            {
-              "id": 92,
+            "92": {
               "location": [2480, 1100]
             },
-            {
-              "id": 93,
+            "93": {
               "location": [1550, 1260],
-              "targeting_path_ids": [13]
+              "targeting_path_ids": {
+                "13": 0.444
+              }
             },
-            {
-              "id": 94,
+            "94": {
               "location": [2450, 1260],
-              "targeting_path_ids": [16]
+              "targeting_path_ids": {
+                "16": 0.444
+              }
             },
-            {
-              "id": 95,
+            "95": {
               "location": [1675, 1180],
-              "targeting_path_ids": [13]
+              "targeting_path_ids": {
+                "13": 0.568
+              }
             },
-            {
-              "id": 96,
+            "96": {
               "location": [2325, 1180],
-              "targeting_path_ids": [16]
+              "targeting_path_ids": {
+                "16": 0.568
+              }
             },
-            {
-              "id": 97,
+            "97": {
               "location": [1675, 1020],
-              "targeting_path_ids": [14]
+              "targeting_path_ids": {
+                "14": 0.568
+              }
             },
-            {
-              "id": 98,
+            "98": {
               "location": [2325, 1020],
-              "targeting_path_ids": [15]
+              "targeting_path_ids": {
+                "15": 0.568
+              }
             },
-            {
-              "id": 99,
+            "99": {
               "location": [1550, 940],
-              "targeting_path_ids": [14]
+              "targeting_path_ids": {
+                "14": 0.444
+              }
             },
-            {
-              "id": 100,
+            "100": {
               "location": [2450, 940],
-              "targeting_path_ids": [15]
+              "targeting_path_ids": {
+                "15": 0.444
+              }
             },
-            {
-              "id": 101,
+            "101": {
               "location": [1865, 894],
-              "targeting_path_ids": [14]
+              "targeting_path_ids": {
+                "14": 0.966
+              }
             },
-            {
-              "id": 102,
+            "102": {
               "location": [1730, 807],
-              "targeting_path_ids": [14]
+              "targeting_path_ids": {
+                "14": 0.832
+              }
             },
-            {
-              "id": 103,
+            "103": {
               "location": [2135, 894],
-              "targeting_path_ids": [15]
+              "targeting_path_ids": {
+                "15": 0.966
+              }
             },
-            {
-              "id": 104,
+            "104": {
               "location": [2270, 807],
-              "targeting_path_ids": [15]
+              "targeting_path_ids": {
+                "15": 0.832
+              }
             },
-            {
-              "id": 105,
+            "105": {
               "location": [1865, 1306],
-              "targeting_path_ids": [13]
+              "targeting_path_ids": {
+                "13": 0.966
+              }
             },
-            {
-              "id": 106,
+            "106": {
               "location": [1730, 1393],
-              "targeting_path_ids": [13]
+              "targeting_path_ids": {
+                "13": 0.832
+              }
             },
-            {
-              "id": 107,
+            "107": {
               "location": [2135, 1306],
-              "targeting_path_ids": [16]
+              "targeting_path_ids": {
+                "16": 0.966
+              }
             },
-            {
-              "id": 108,
+            "108": {
               "location": [2270, 1393],
-              "targeting_path_ids": [16]
+              "targeting_path_ids": {
+                "16": 0.832
+              }
             }
-          ],
+          },
           "paths": {
             "13": {
               "name": "Outpost 5 - Center",
