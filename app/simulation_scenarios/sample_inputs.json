@@ -1,0 +1,399 @@
+{
+  "simulation_generalized": [
+    {
+      "game_defensive_buildings": [
+        {
+          "id": 1,
+          "defensive_building_id": 1,
+          "territory_id": 1,
+          "owner_id": 1,
+          "damage": 10,
+          "health_points": 300,
+          "max_health_points": 300,
+          "range": 4,
+          "cone_angle": 0,
+          "experience": 0,
+          "firerate": 4,
+          "accuracy": 80,
+          "air_accuracy": 50,
+          "can_attack_ground": true,
+          "can_attack_air": true,
+          "experience_threshold": 300,
+          "location": [400, 687],
+          "targeting_path_ids": {
+            "1": 0.326
+          }
+        },
+        {
+          "id": 2,
+          "defensive_building_id": 2,
+          "territory_id": 2,
+          "owner_id": 1,
+          "damage": 49,
+          "health_points": 450,
+          "max_health_points": 450,
+          "range": 2,
+          "cone_angle": 45,
+          "experience": 0,
+          "firerate": 2,
+          "accuracy": 90,
+          "air_accuracy": 0,
+          "can_attack_ground": true,
+          "can_attack_air": false,
+          "experience_threshold": 1000,
+          "location": [825, 1600],
+          "targeting_path_ids": {
+            "4": 0.519,
+            "6": 0.613
+          }
+        },
+        {
+          "id": 3,
+          "defensive_building_id": 1,
+          "territory_id": 2,
+          "owner_id": 1,
+          "damage": 10,
+          "health_points": 300,
+          "max_health_points": 300,
+          "range": 4,
+          "cone_angle": 0,
+          "experience": 0,
+          "firerate": 4,
+          "accuracy": 80,
+          "air_accuracy": 50,
+          "can_attack_ground": true,
+          "can_attack_air": true,
+          "experience_threshold": 300,
+          "location": [500, 1775],
+          "targeting_path_ids": {
+            "4": 0.674,
+            "6": 0.936
+          }
+        },
+        {
+          "id": 4,
+          "defensive_building_id": 3,
+          "territory_id": 3,
+          "owner_id": 1,
+          "damage": 320,
+          "health_points": 600,
+          "max_health_points": 600,
+          "range": 6,
+          "cone_angle": 0,
+          "experience": 0,
+          "firerate": 1,
+          "accuracy": 90,
+          "air_accuracy": 0,
+          "can_attack_ground": true,
+          "can_attack_air": false,
+          "experience_threshold": 3600,
+          "location": [2750, 1670],
+          "targeting_path_ids": {
+            "8": 0.499,
+            "9": 0.316
+          }
+        },
+        {
+          "id": 5,
+          "defensive_building_id": 3,
+          "territory_id": 3,
+          "owner_id": 1,
+          "damage": 320,
+          "health_points": 600,
+          "max_health_points": 600,
+          "range": 6,
+          "cone_angle": 0,
+          "experience": 0,
+          "firerate": 1,
+          "accuracy": 90,
+          "air_accuracy": 0,
+          "can_attack_ground": true,
+          "can_attack_air": false,
+          "experience_threshold": 3600,
+          "location": [3020, 1800],
+          "targeting_path_ids": {
+            "8": 0.628,
+            "9": 0.578
+          }
+        }
+      ],
+      "attacks": [
+        {
+          "path_id": 1,
+          "territory_id": 1,
+          "outpost_id": 1,
+          "attack_units": {
+            "1": {
+              "count": 15,
+              "overall_delay": 0,
+              "unit_delay": 0.5,
+              "targets": {
+                "0.75": {
+                  "type": 1,
+                  "id": 1
+                },
+                "0.25": {
+                  "type": 2,
+                  "id": 1
+                }
+              }
+            }
+          }
+        },
+        {
+          "path_id": 4,
+          "territory_id": 2,
+          "outpost_id": 1,
+          "attack_units": {
+            "2": {
+              "count": 15,
+              "overall_delay": 0,
+              "unit_delay": 0.5,
+              "targets": {
+                "0.5": {
+                  "type": 1,
+                  "id": 2
+                },
+                "0.3": {
+                  "type": 2,
+                  "id": 2
+                },
+                "0.2": {
+                  "type": 2,
+                  "id": 3
+                }
+              }
+            }
+          }
+        },
+        {
+          "path_id": 6,
+          "territory_id": 2,
+          "outpost_id": 6,
+          "attack_units": {
+            "1": {
+              "count": 15,
+              "overall_delay": 0,
+              "unit_delay": 0.5,
+              "targets": {
+                "0.5": {
+                  "type": 1,
+                  "id": 2
+                },
+                "0.3": {
+                  "type": 2,
+                  "id": 2
+                },
+                "0.2": {
+                  "type": 2,
+                  "id": 3
+                }
+              }
+            }
+          }
+        },
+        {
+          "path_id": 8,
+          "territory_id": 3,
+          "outpost_id": 2,
+          "attack_units": {
+            "3": {
+              "count": 10,
+              "overall_delay": 0,
+              "unit_delay": 1,
+              "targets": {
+                "0.45": {
+                  "type": 1,
+                  "id": 3
+                },
+                "0.35": {
+                  "type": 2,
+                  "id": 4
+                },
+                "0.2": {
+                  "type": 2,
+                  "id": 5
+                }
+              }
+            }
+          }
+        },
+        {
+          "path_id": 9,
+          "territory_id": 3,
+          "outpost_id": 7,
+          "attack_units": {
+            "4": {
+              "count": 10,
+              "overall_delay": 0,
+              "unit_delay": 1,
+              "targets": {
+                "0.45": {
+                  "type": 1,
+                  "id": 3
+                },
+                "0.35": {
+                  "type": 2,
+                  "id": 4
+                },
+                "0.2": {
+                  "type": 2,
+                  "id": 5
+                }
+              }
+            }
+          }
+        }
+      ],
+      "attack_unit_types": [
+        {
+          "id": 1,
+          "name": "Rifleman",
+          "type": "troop",
+          "picture": "rifleman.png",
+          "in_game_picture": "rifleman_top.png",
+          "rarity": "common",
+          "cost": 50,
+          "damage": 20,
+          "health_points": 60,
+          "speed": 2,
+          "accuracy": 90,
+          "number_of_units": 15,
+          "max_number_per_line": 3,
+          "is_air": false,
+          "is_sea": false,
+          "turns_to_build": 1,
+          "experience_value": 10,
+          "shop_cost": 0,
+          "description": "A basic cheap infantry unit that is very useful in swarms in the early game. Ideal when spammed in large numbers."
+        },
+        {
+          "id": 2,
+          "name": "Bazookaman",
+          "type": "troop",
+          "picture": "bazookaman.png",
+          "in_game_picture": "bazookaman_top.png",
+          "rarity": "uncommon",
+          "cost": 175,
+          "damage": 40,
+          "health_points": 150,
+          "speed": 3,
+          "accuracy": 90,
+          "number_of_units": 15,
+          "max_number_per_line": 3,
+          "is_air": false,
+          "is_sea": false,
+          "turns_to_build": 1,
+          "experience_value": 35,
+          "shop_cost": 49,
+          "description": "More durable and stronger than riflemen. Useful for the mid-game, especially against gunner turrets."
+        },
+        {
+          "id": 3,
+          "name": "Trooper Vault",
+          "type": "vehicle",
+          "picture": "trooper_vault.png",
+          "in_game_picture": "trooper_vault_top.png",
+          "rarity": "common",
+          "cost": 450,
+          "damage": 110,
+          "health_points": 400,
+          "speed": 6,
+          "accuracy": 90,
+          "number_of_units": 5,
+          "max_number_per_line": 1,
+          "is_air": false,
+          "is_sea": false,
+          "turns_to_build": 1,
+          "experience_value": 90,
+          "shop_cost": 0,
+          "description": "Trooper Vaults are fast and carry infantry for a surprise, more durable wave."
+        },
+        {
+          "id": 4,
+          "name": "Bulwark Tank",
+          "type": "vehicle",
+          "picture": "bulwark_tank.png",
+          "in_game_picture": "bulwark_tank_top.png",
+          "rarity": "rare",
+          "cost": 1200,
+          "damage": 300,
+          "health_points": 1500,
+          "speed": 4,
+          "accuracy": 90,
+          "number_of_units": 5,
+          "max_number_per_line": 1,
+          "is_air": false,
+          "is_sea": false,
+          "turns_to_build": 2,
+          "experience_value": 240,
+          "shop_cost": 490,
+          "description": "Late-game tank wave for high damage and durability. Excellent against most defensive structures."
+        }
+      ],
+      "buildings_data": {
+        "cities": {
+          "1": {
+            "hp": "400",
+            "max_hp": "400"
+          },
+          "2": {
+            "hp": "400",
+            "max_hp": "400"
+          },
+          "3": {
+            "hp": "400",
+            "max_hp": "400"
+          }
+        },
+        "generative_buildings": { },
+        "defensive_buildings": {
+          "1": {
+            "defensive_buildings_id": "1",
+            "hp": "300",
+            "max_hp": "300",
+            "targeting_path_ids": {
+              "1": 0.326
+            }
+          },
+          "2": {
+            "defensive_buildings_id": "2",
+            "hp": "450",
+            "max_hp": "450",
+            "targeting_path_ids": {
+              "4": 0.519,
+              "6": 0.613
+            }
+          },
+          "3": {
+            "defensive_buildings_id": "1",
+            "hp": "300",
+            "max_hp": "300",
+            "targeting_path_ids": {
+              "4": 0.674,
+              "6": 0.936
+            }
+          },
+          "4": {
+            "defensive_buildings_id": "3",
+            "hp": "600",
+            "max_hp": "600",
+            "targeting_path_ids": {
+              "8": 0.499,
+              "9": 0.316
+            }
+          },
+          "5": {
+            "defensive_buildings_id": "3",
+            "hp": "600",
+            "max_hp": "600",
+            "targeting_path_ids": {
+              "8": 0.628,
+              "9": 0.578
+            }
+          }
+        }
+      }
+    }
+  ]
+}

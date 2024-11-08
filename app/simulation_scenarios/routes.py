@@ -12,25 +12,29 @@ from app.game_defensive_building.schemas import GameDefensiveBuildingBase
 from app.game_generative_building.schemas import GameGenerativeBuildingBase
 from app.attack_unit.schemas import AttackUnitSimResponse
 from typing import List, Dict, Any
+from pydantic import BaseModel
 
 router = APIRouter(tags=["Simulation Scenarios"])
 
+class MapIdRequest(BaseModel):
+    game_defensive_buildings: List[GameDefensiveBuildingBase]
+    #  game_generative_buildings: List[GameGenerativeBuildingBase]
+    attacks: List[Dict[str, Any]]
+    attack_unit_types: List[AttackUnitSimResponse]
+    buildings_data: Dict[str, Dict[int, Dict[str, Any]]]
+    map_id: int
+
 @router.post("/simulate/attack_generalized", response_model=SimulationDataGeneralized)
 def simulate_attack_endpoint(
-    game_defensive_buildings: List[GameDefensiveBuildingBase],
-    #  game_generative_buildings: List[GameGenerativeBuildingBase],
-    game_attack_units: List[Dict[str, Any]],
-    attack_unit_types: List[AttackUnitSimResponse],
-    buildings_data: Dict[str, Dict[int, Dict[str, Any]]],
-    map_id: int
+    request: MapIdRequest
 ):
     simulation_data = simulate_attack_generalized(
-        game_defensive_buildings=game_defensive_buildings,
-        # game_generative_buildings=game_generative_buildings,
-        game_attack_units=game_attack_units,
-        attack_unit_types=attack_unit_types,
-        buildings_data=buildings_data,
-        map_id=map_id
+        game_defensive_buildings=request.game_defensive_buildings,
+        # game_generative_buildings=request.game_generative_buildings,
+        attacks=request.attacks,
+        attack_unit_types=request.attack_unit_types,
+        buildings_data=request.buildings_data,
+        map_id=request.map_id
     )
     return simulation_data
 
