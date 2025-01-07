@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  web-dev:
+    image: python:3.11-slim
+    container_name: fastapi-app-dev
+    build: .
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "${FASTAPI_PORT:-8002}:8000"  # FastAPI app port for development
+    env_file:
+      - .env.dev    # Use the .env.dev file for development
+    depends_on:
+      - db-dev
+      - redis-dev
+    networks:
+      - backend_network_dev
+
+  db-dev:
+    image: postgres:15
+    container_name: postgres-db-dev
+    env_file:
+      - .env.dev    # Use the .env.dev file for development
+    volumes:
+      - postgres_data_dev:/var/lib/postgresql/data
+      - ./empty_db.sh:/usr/local/bin/empty_db.sh  # Mount a script to empty the database into the container
+    ports:
+      - "5434:5432"  # PostgreSQL port for development
+    networks:
+      - backend_network_dev
+
+  redis-dev:
+    image: redis:7.2
+    container_name: redis-cache-dev
+    ports:
+      - "${REDIS_PORT:-6381}:6379"  # Redis port for development
+    networks:
+      - backend_network_dev
+  
+  pgadmin-dev:
+    image: dpage/pgadmin4:8.12
+    container_name: pgadmin-dev
+    env_file:
+      - .env.dev    # Use the .env.dev file for development
+    ports:
+      - "${PGADMIN_PORT:-5052}:80"  # Expose pgAdmin on port 5052
+    depends_on:
+      - db-dev
+    networks:
+      - backend_network_dev
+
+volumes:
+  postgres_data_dev:
+  redis_data_dev:
+
+networks:
+  backend_network_dev:
+    name: backend_network_dev

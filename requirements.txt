@@ -1,10 +1,20 @@
-fastapi
-uvicorn
-sqlalchemy
-pydantic
-asyncpg  # For PostgreSQL async support
-redis
-pytest
 alembic
-python-dotenv
+asyncpg  # For PostgreSQL async supportfastapi
+databases
+fastapi
+httpx
+passlib
 psycopg2-binary
+pydantic
+pydantic[email]
+pydantic-settings
+pytest
+pytest-asyncio
+pytest-bdd
+python-dotenv
+python-jose
+redis
+requests
+sendgrid
+sqlalchemy
+uvicorn

@@ -1,3 +1,7 @@
 .env.dev
 .env.test
 .env.prod
+.env.db_only
+docker-compose.db_only.yml
+servers.json
+**/__pycache__/
